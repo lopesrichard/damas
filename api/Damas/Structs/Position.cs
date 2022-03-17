@@ -40,5 +40,10 @@ namespace Damas.Structs
         {
             return new Position(X + squares, Y - squares);
         }
+
+        public override string ToString()
+        {
+            return $"{X},{Y}";
+        }
     }
 }
