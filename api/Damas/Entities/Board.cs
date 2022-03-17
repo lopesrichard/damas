@@ -32,12 +32,12 @@ namespace Damas.Entities
 
         public bool IsPositionOccupied(Position position)
         {
-            return Pieces.Any(p => p.Position == position);
+            return Pieces.Any(p => p.Position == position && !p.IsCaptured);
         }
 
         public bool IsPositionOccupied(Position position, Color color)
         {
-            return Pieces.Any(p => p.Position == position && p.Color == color);
+            return Pieces.Any(p => p.Position == position && !p.IsCaptured && p.Color == color);
         }
 
         public Piece GetPieceAt(Position position)

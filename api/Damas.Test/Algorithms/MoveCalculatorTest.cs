@@ -44,14 +44,14 @@ public class MoveCalculatorTest
     {
         return BuildMatch(new List<Piece>()
         {
-            new Piece(Guid.NewGuid(), new Position(0, 2), Color.WHITE, false),
-            new Piece(Guid.NewGuid(), new Position(1, 1), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(1, 3), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(1, 5), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(3, 1), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(3, 5), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(5, 3), Color.BLACK, false),
+            new Piece(Guid.NewGuid(), new Position(0, 2), Color.WHITE, false, false),
+            new Piece(Guid.NewGuid(), new Position(1, 1), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(1, 3), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(1, 5), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 1), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 5), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(5, 3), Color.BLACK, false, false),
         });
     }
 
@@ -173,14 +173,14 @@ public class MoveCalculatorTest
     {
         return BuildMatch(new List<Piece>()
         {
-            new Piece(Guid.NewGuid(), new Position(1, 1), Color.WHITE, false),
-            new Piece(Guid.NewGuid(), new Position(3, 1), Color.WHITE, false),
-            new Piece(Guid.NewGuid(), new Position(5, 1), Color.WHITE, false),
-            new Piece(Guid.NewGuid(), new Position(4, 2), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(6, 2), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(5, 3), Color.BLACK, false),
-            new Piece(Guid.NewGuid(), new Position(7, 3), Color.BLACK, false),
+            new Piece(Guid.NewGuid(), new Position(1, 1), Color.WHITE, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 1), Color.WHITE, false, false),
+            new Piece(Guid.NewGuid(), new Position(5, 1), Color.WHITE, false, false),
+            new Piece(Guid.NewGuid(), new Position(4, 2), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(6, 2), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(5, 3), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(7, 3), Color.BLACK, false, false),
         });
     }
 

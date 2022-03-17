@@ -60,14 +60,23 @@ namespace Damas.Entities
 
         public void CapturePiece(Piece piece)
         {
-            Captures.Add(piece);
-            Board.RemovePiece(piece);
+            piece.IsCaptured = true;
         }
 
         public void RestorePiece(Piece piece)
         {
-            Captures.Remove(piece);
-            Board.AddPiece(piece);
+            piece.IsCaptured = false;
+        }
+
+        public void CommitCaptures()
+        {
+            var pieces = Board.Pieces.Where(piece => piece.IsCaptured);
+
+            foreach (var piece in pieces)
+            {
+                Captures.Add(piece);
+                Board.RemovePiece(piece);
+            }
         }
     }
 }
