@@ -38,19 +38,24 @@ namespace Damas.Entities
             return Board.Pieces.Where(piece => piece.Color != CurrentPlayer.Color);
         }
 
+        public bool IsValidPosition(Position position)
+        {
+            return Board.IsValidPosition(position);
+        }
+
         public bool IsPositionAvaialable(Position position)
         {
-            return Board.IsValidPosition(position) && Board.IsPositionAvaialable(position);
+            return IsValidPosition(position) && Board.IsPositionAvaialable(position);
         }
 
         public bool IsPositionOccupied(Position position)
         {
-            return Board.IsValidPosition(position) && Board.IsPositionOccupied(position);
+            return IsValidPosition(position) && Board.IsPositionOccupied(position);
         }
 
         public bool IsPositionOccupiedByOpponent(Position position)
         {
-            return Board.IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color.Opposite());
+            return IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color.Opposite());
         }
 
         public Piece GetPieceAt(Position position)
