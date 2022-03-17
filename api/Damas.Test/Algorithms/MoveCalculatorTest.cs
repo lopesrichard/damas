@@ -11,6 +11,22 @@ namespace Damas.Test.Algorithms;
 
 public class MoveCalculatorTest
 {
+    private Match BuildMatch(ICollection<Piece> pieces)
+    {
+        var playerOne = new Player(Guid.NewGuid(), "Player 1", Color.WHITE);
+        var playerTwo = new Player(Guid.NewGuid(), "Player 2", Color.BLACK);
+
+        var board = new Board(Guid.NewGuid(), BoardSize.SIXTY_FOUR_SQUARES, pieces);
+
+        var captures = new List<Piece>();
+
+        return new Match(Guid.NewGuid(), playerOne, playerOne.Id, playerTwo, playerTwo.Id, board, board.Id, playerOne, playerOne.Id, captures);
+    }
+
+    // ==============================================================================================
+    // ====================================== CAPTURE TESTS =========================================
+    // ==============================================================================================
+
     // -------------------------------------
     // The following scenario is returned
     // -------------------------------------
@@ -26,10 +42,7 @@ public class MoveCalculatorTest
     // -------------------------------------
     private Match GetCaptureTestCase()
     {
-        var playerOne = new Player(Guid.NewGuid(), "Player 1", Color.WHITE);
-        var playerTwo = new Player(Guid.NewGuid(), "Player 2", Color.BLACK);
-
-        var pieces = new List<Piece>()
+        return BuildMatch(new List<Piece>()
         {
             new Piece(Guid.NewGuid(), new Position(0, 2), Color.WHITE, false),
             new Piece(Guid.NewGuid(), new Position(1, 1), Color.BLACK, false),
@@ -39,13 +52,7 @@ public class MoveCalculatorTest
             new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false),
             new Piece(Guid.NewGuid(), new Position(3, 5), Color.BLACK, false),
             new Piece(Guid.NewGuid(), new Position(5, 3), Color.BLACK, false),
-        };
-
-        var board = new Board(Guid.NewGuid(), BoardSize.SIXTY_FOUR_SQUARES, pieces);
-
-        var captures = new List<Piece>();
-
-        return new Match(Guid.NewGuid(), playerOne, playerOne.Id, playerTwo, playerTwo.Id, board, board.Id, playerOne, playerOne.Id, captures);
+        });
     }
 
     [Test]
@@ -143,5 +150,64 @@ public class MoveCalculatorTest
         var secondChildOnlyChildSecondChild = secondChildOnlyChild.Children[1];
         Assert.AreEqual(new Position(6, 4), secondChildOnlyChildSecondChild.Value);
         Assert.That(secondChildOnlyChildSecondChild.Children, Is.Empty);
+    }
+
+    // ==============================================================================================
+    // ==================================== NON CAPTURE TESTS =======================================
+    // ==============================================================================================
+
+    // -------------------------------------
+    // The following scenario is returned
+    // -------------------------------------
+    // | 7 |   |   |   |   |   |   |   |   |
+    // | 6 |   |   |   |   |   |   |   |   |
+    // | 5 |   |   |   |   |   |   |   |   |
+    // | 4 |   |   |   |   |   |   |   |   |
+    // | 3 |   |   |   | B |   | B |   | B |
+    // | 2 |   |   |   |   | B |   | B |   |
+    // | 1 |   | W |   | W |   | W |   |   |
+    // | 0 |   |   |   |   |   |   |   |   |
+    // | - | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+    // -------------------------------------
+    private Match GetNonCaptureTestCase()
+    {
+        return BuildMatch(new List<Piece>()
+        {
+            new Piece(Guid.NewGuid(), new Position(1, 1), Color.WHITE, false),
+            new Piece(Guid.NewGuid(), new Position(3, 1), Color.WHITE, false),
+            new Piece(Guid.NewGuid(), new Position(5, 1), Color.WHITE, false),
+            new Piece(Guid.NewGuid(), new Position(4, 2), Color.BLACK, false),
+            new Piece(Guid.NewGuid(), new Position(6, 2), Color.BLACK, false),
+            new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false),
+            new Piece(Guid.NewGuid(), new Position(5, 3), Color.BLACK, false),
+            new Piece(Guid.NewGuid(), new Position(7, 3), Color.BLACK, false),
+        });
+    }
+
+    [Test]
+    public void ShouldReturnCorrectTreeOfNonCaptureMoves()
+    {
+        var match = GetNonCaptureTestCase();
+
+        var calculator = new MoveCalculator();
+
+        var moves = calculator.Calculate(match);
+
+        Assert.That(moves, Has.Count.EqualTo(3));
+
+        var firstTree = moves.First().Value;
+        Assert.AreEqual(3, firstTree.CountNodes());
+        Assert.AreEqual(new Position(1, 1), firstTree.Root.Value);
+        Assert.That(firstTree.Root.Children, Has.Count.EqualTo(2));
+
+        var secondTree = moves.Skip(1).First().Value;
+        Assert.AreEqual(2, secondTree.CountNodes());
+        Assert.AreEqual(new Position(3, 1), secondTree.Root.Value);
+        Assert.That(secondTree.Root.Children, Has.Count.EqualTo(1));
+
+        var thirdTree = moves.Skip(2).First().Value;
+        Assert.AreEqual(1, thirdTree.CountNodes());
+        Assert.AreEqual(new Position(5, 1), thirdTree.Root.Value);
+        Assert.That(thirdTree.Root.Children, Is.Empty);
     }
 }
