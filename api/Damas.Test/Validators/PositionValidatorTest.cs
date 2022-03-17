@@ -109,5 +109,6 @@ public class PositionValidatorTest
         var board = new Board(Guid.NewGuid(), BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>());
 
         Assert.That(validator.Validate(board, new Position(0, 1)), Has.Some.InstanceOf<NonPlayablePositionException>());
+        Assert.That(validator.Validate(board, new Position(1, 0)), Has.Some.InstanceOf<NonPlayablePositionException>());
     }
 }
