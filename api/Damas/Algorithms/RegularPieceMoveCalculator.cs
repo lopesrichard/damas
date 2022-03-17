@@ -1,0 +1,70 @@
+using Damas.DataStructures;
+using Damas.Entities;
+using Damas.Enums;
+using Damas.Structs;
+
+namespace Damas.Algorithms
+{
+    public class RegularPieceMoveCalculator : IPieceMoveCalculator
+    {
+        public GeneralTree<Position> Calculate(Match match, Piece piece)
+        {
+            var tree = new GeneralTree<Position>(piece.Position);
+
+            CalculateCaptureMoves(match, piece, tree.Root);
+
+            if (tree.Root.Children.Count > 0)
+            {
+                return tree;
+            }
+
+            CalculateNonCaptureMoves(match, tree.Root);
+
+            return tree;
+        }
+
+        private void CalculateCaptureMoves(Match match, Piece piece, GeneralTreeNode<Position> node)
+        {
+            CalculateCaptureMoves(match, piece, node, node.Value.Northwest(1), node.Value.Northwest(2));
+            CalculateCaptureMoves(match, piece, node, node.Value.Northeast(1), node.Value.Northeast(2));
+            CalculateCaptureMoves(match, piece, node, node.Value.Southwest(1), node.Value.Southwest(2));
+            CalculateCaptureMoves(match, piece, node, node.Value.Southeast(1), node.Value.Southeast(2));
+        }
+
+        private void CalculateCaptureMoves(Match match, Piece piece, GeneralTreeNode<Position> node, Position nearest1, Position nearest2)
+        {
+            if (match.IsPositionOccupiedByOpponent(nearest1) && match.IsPositionAvaialable(nearest2))
+            {
+                var child = node.Append(nearest2);
+
+                var backup = match.GetPieceAt(nearest1);
+
+                piece.Position = nearest2;
+                match.CapturePiece(backup);
+
+                CalculateCaptureMoves(match, piece, child);
+
+                piece.Position = node.Value;
+                match.RestorePiece(backup);
+            }
+        }
+
+        private void CalculateNonCaptureMoves(Match match, GeneralTreeNode<Position> node)
+        {
+            var position = node.Value;
+
+            var nearest1 = match.CurrentPlayer.Color == Color.WHITE ? position.Northwest(1) : position.Southwest(1);
+            var nearest2 = match.CurrentPlayer.Color == Color.WHITE ? position.Northeast(1) : position.Southeast(1);
+
+            if (match.IsPositionAvaialable(nearest1))
+            {
+                node.Append(nearest1);
+            }
+
+            if (match.IsPositionAvaialable(nearest2))
+            {
+                node.Append(nearest2);
+            }
+        }
+    }
+}
