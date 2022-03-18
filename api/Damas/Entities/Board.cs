@@ -27,7 +27,7 @@ namespace Damas.Entities
 
         public bool IsPositionAvaialable(Position position)
         {
-            return Pieces.None(p => p.Position == position);
+            return Pieces.None(p => p.Position == position && !p.IsCaptured);
         }
 
         public bool IsPositionOccupied(Position position)
