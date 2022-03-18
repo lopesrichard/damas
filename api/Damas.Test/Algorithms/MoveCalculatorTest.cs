@@ -92,64 +92,38 @@ public class MoveCalculatorTest
         var moves = calculator.Calculate(match);
 
         var tree = moves.First().Value;
-        Assert.AreEqual(new Position(0, 2), tree.Root.Value);
+
         Assert.That(tree.Root.Children, Has.Count.EqualTo(2));
+        Assert.That(tree.Root.Children[0].Children, Has.Count.EqualTo(3));
+        Assert.That(tree.Root.Children[0].Children[0].Children, Is.Empty);
+        Assert.That(tree.Root.Children[0].Children[1].Children, Is.Empty);
+        Assert.That(tree.Root.Children[0].Children[2].Children, Has.Count.EqualTo(2));
+        Assert.That(tree.Root.Children[0].Children[2].Children[0].Children, Is.Empty);
+        Assert.That(tree.Root.Children[0].Children[2].Children[1].Children, Has.Count.EqualTo(1));
+        Assert.That(tree.Root.Children[0].Children[2].Children[1].Children[0].Children, Is.Empty);
+        Assert.That(tree.Root.Children[1].Children, Has.Count.EqualTo(1));
+        Assert.That(tree.Root.Children[1].Children[0].Children[0].Children, Has.Count.EqualTo(3));
+        Assert.That(tree.Root.Children[1].Children[0].Children[0].Children[1].Children, Is.Empty);
+        Assert.That(tree.Root.Children[1].Children[0].Children, Has.Count.EqualTo(2));
+        Assert.That(tree.Root.Children[1].Children[0].Children[1].Children, Is.Empty);
+        Assert.That(tree.Root.Children[1].Children[0].Children[0].Children[0].Children, Is.Empty);
+        Assert.That(tree.Root.Children[1].Children[0].Children[0].Children[2].Children, Is.Empty);
 
-        var firstChild = tree.Root.Children[0];
-        Assert.AreEqual(new Position(2, 4), firstChild.Value);
-        Assert.That(firstChild.Children, Has.Count.EqualTo(3));
-
-        var firstChildFirstChild = firstChild.Children[0];
-        Assert.AreEqual(new Position(0, 6), firstChildFirstChild.Value);
-        Assert.That(firstChildFirstChild.Children, Is.Empty);
-
-        var firstChildSecondChild = firstChild.Children[1];
-        Assert.AreEqual(new Position(4, 6), firstChildSecondChild.Value);
-        Assert.That(firstChildSecondChild.Children, Is.Empty);
-
-        var firstChildThirdChild = firstChild.Children[2];
-        Assert.AreEqual(new Position(4, 2), firstChildThirdChild.Value);
-        Assert.That(firstChildThirdChild.Children, Has.Count.EqualTo(2));
-
-        var firstChildThirdChildFirstChild = firstChildThirdChild.Children[0];
-        Assert.AreEqual(new Position(6, 4), firstChildThirdChildFirstChild.Value);
-        Assert.That(firstChildThirdChildFirstChild.Children, Is.Empty);
-
-        var firstChildThirdChildSecondChild = firstChildThirdChild.Children[1];
-        Assert.AreEqual(new Position(2, 0), firstChildThirdChildSecondChild.Value);
-        Assert.That(firstChildThirdChildSecondChild.Children, Has.Count.EqualTo(1));
-
-        var firstChildThirdChildSecondChildOnlyChild = firstChildThirdChildSecondChild.Children[0];
-        Assert.AreEqual(new Position(0, 2), firstChildThirdChildSecondChildOnlyChild.Value);
-        Assert.That(firstChildThirdChildSecondChildOnlyChild.Children, Is.Empty);
-
-        var secondChild = tree.Root.Children[1];
-        Assert.AreEqual(new Position(2, 0), secondChild.Value);
-        Assert.That(secondChild.Children, Has.Count.EqualTo(1));
-
-        var secondChildOnlyChild = secondChild.Children[0];
-        Assert.AreEqual(new Position(4, 2), secondChildOnlyChild.Value);
-        Assert.That(secondChildOnlyChild.Children, Has.Count.EqualTo(2));
-
-        var secondChildOnlyChildFirstChild = secondChildOnlyChild.Children[0];
-        Assert.AreEqual(new Position(2, 4), secondChildOnlyChildFirstChild.Value);
-        Assert.That(secondChildOnlyChildFirstChild.Children, Has.Count.EqualTo(3));
-
-        var secondChildOnlyChildFirstChildFirstChild = secondChildOnlyChildFirstChild.Children[0];
-        Assert.AreEqual(new Position(0, 6), secondChildOnlyChildFirstChildFirstChild.Value);
-        Assert.That(secondChildOnlyChildFirstChildFirstChild.Children, Is.Empty);
-
-        var secondChildOnlyChildFirstChildSecondChild = secondChildOnlyChildFirstChild.Children[1];
-        Assert.AreEqual(new Position(4, 6), secondChildOnlyChildFirstChildSecondChild.Value);
-        Assert.That(secondChildOnlyChildFirstChildSecondChild.Children, Is.Empty);
-
-        var secondChildOnlyChildFirstChildThirdChild = secondChildOnlyChildFirstChild.Children[2];
-        Assert.AreEqual(new Position(0, 2), secondChildOnlyChildFirstChildThirdChild.Value);
-        Assert.That(secondChildOnlyChildFirstChildThirdChild.Children, Is.Empty);
-
-        var secondChildOnlyChildSecondChild = secondChildOnlyChild.Children[1];
-        Assert.AreEqual(new Position(6, 4), secondChildOnlyChildSecondChild.Value);
-        Assert.That(secondChildOnlyChildSecondChild.Children, Is.Empty);
+        Assert.AreEqual(new Position(0, 2), tree.Root.Value);
+        Assert.AreEqual(new Position(2, 4), tree.Root.Children[0].Value);
+        Assert.AreEqual(new Position(0, 6), tree.Root.Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(4, 6), tree.Root.Children[0].Children[1].Value);
+        Assert.AreEqual(new Position(4, 2), tree.Root.Children[0].Children[2].Value);
+        Assert.AreEqual(new Position(6, 4), tree.Root.Children[0].Children[2].Children[0].Value);
+        Assert.AreEqual(new Position(2, 0), tree.Root.Children[0].Children[2].Children[1].Value);
+        Assert.AreEqual(new Position(0, 2), tree.Root.Children[0].Children[2].Children[1].Children[0].Value);
+        Assert.AreEqual(new Position(2, 0), tree.Root.Children[1].Value);
+        Assert.AreEqual(new Position(4, 2), tree.Root.Children[1].Children[0].Value);
+        Assert.AreEqual(new Position(2, 4), tree.Root.Children[1].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(0, 6), tree.Root.Children[1].Children[0].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(4, 6), tree.Root.Children[1].Children[0].Children[0].Children[1].Value);
+        Assert.AreEqual(new Position(0, 2), tree.Root.Children[1].Children[0].Children[0].Children[2].Value);
+        Assert.AreEqual(new Position(6, 4), tree.Root.Children[1].Children[0].Children[1].Value);
     }
 
     // ==============================================================================================
@@ -215,6 +189,73 @@ public class MoveCalculatorTest
     // ================================ DAMA PIECE CAPTURE TESTS ====================================
     // ==============================================================================================
 
+    // -------------------------------------
+    // The following scenario is returned
+    // -------------------------------------
+    // | 7 |   |   |   |   |   | Ẅ |   |   |
+    // | 6 |   |   |   |   |   |   |   |   |
+    // | 5 |   | B |   | B |   |   |   |   |
+    // | 4 |   |   |   |   |   |   | B |   |
+    // | 3 |   |   |   | B |   |   |   |   |
+    // | 2 | Ẅ |   |   |   |   |   | B |   |
+    // | 1 |   | B |   |   |   |   |   |   |
+    // | 0 |   |   |   |   |   |   |   |   |
+    // | - | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+    // -------------------------------------
+    private Match GetDamaCaptureTestCase()
+    {
+        return BuildMatch(new List<Piece>()
+        {
+            new Piece(Guid.NewGuid(), new Position(0, 2), Color.WHITE, true, false),
+            new Piece(Guid.NewGuid(), new Position(5, 7), Color.WHITE, true, false),
+            new Piece(Guid.NewGuid(), new Position(1, 1), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(1, 5), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 3), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(3, 5), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(6, 2), Color.BLACK, false, false),
+            new Piece(Guid.NewGuid(), new Position(6, 4), Color.BLACK, false, false),
+        });
+    }
+
+    [Test]
+    public void ShouldReturnCorrectTreeOfDamaCaptureMoves()
+    {
+        var match = GetDamaCaptureTestCase();
+
+        var calculator = new MoveCalculator();
+
+        var pieces = match.GetCurrentPlayerPieces();
+
+        var moves = calculator.Calculate(match);
+
+        Assert.That(moves, Has.Count.EqualTo(2));
+
+        Assert.AreEqual(new Position(4, 6), moves[pieces.ElementAt(0).Id].Root.Children[0].Value);
+        Assert.AreEqual(new Position(7, 3), moves[pieces.ElementAt(0).Id].Root.Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(5, 1), moves[pieces.ElementAt(0).Id].Root.Children[0].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(2, 4), moves[pieces.ElementAt(0).Id].Root.Children[0].Children[0].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(0, 6), moves[pieces.ElementAt(0).Id].Root.Children[0].Children[0].Children[0].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(4, 0), moves[pieces.ElementAt(0).Id].Root.Children[0].Children[0].Children[1].Value);
+        Assert.AreEqual(new Position(2, 0), moves[pieces.ElementAt(0).Id].Root.Children[1].Value);
+        Assert.AreEqual(new Position(7, 5), moves[pieces.ElementAt(0).Id].Root.Children[1].Children[0].Value);
+        Assert.AreEqual(new Position(2, 4), moves[pieces.ElementAt(1).Id].Root.Children[0].Value);
+        Assert.AreEqual(new Position(0, 6), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(4, 2), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(7, 5), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[0].Children[0].Children[0].Value);
+        Assert.AreEqual(new Position(4, 2), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[1].Value);
+        Assert.AreEqual(new Position(0, 6), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[1].Children[0].Value);
+        Assert.AreEqual(new Position(7, 5), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[1].Children[1].Value);
+        Assert.AreEqual(new Position(5, 1), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Value);
+        Assert.AreEqual(new Position(0, 6), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Children[0].Value);
+        Assert.AreEqual(new Position(7, 3), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Children[1].Value);
+        Assert.AreEqual(new Position(5, 5), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Children[1].Children[0].Value);
+        Assert.AreEqual(new Position(4, 6), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Children[1].Children[1].Value);
+        Assert.AreEqual(new Position(3, 7), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Children[1].Children[2].Value);
+        Assert.AreEqual(new Position(0, 4), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[2].Children[1].Children[2].Children[0].Value);
+        Assert.AreEqual(new Position(6, 0), moves[pieces.ElementAt(1).Id].Root.Children[0].Children[3].Value);
+        Assert.AreEqual(new Position(1, 3), moves[pieces.ElementAt(1).Id].Root.Children[1].Value);
+    }
+
     // ==============================================================================================
     // ============================== DAMA PIECE NON CAPTURE TESTS ==================================
     // ==============================================================================================
@@ -224,10 +265,10 @@ public class MoveCalculatorTest
     // -------------------------------------
     // | 7 |   |   |   |   |   |   |   |   |
     // | 6 |   |   |   |   |   |   |   |   |
-    // | 5 |   | W |   |   |   |   |   |   |
+    // | 5 |   | Ẅ |   |   |   |   |   |   |
     // | 4 |   |   |   |   | B |   | B |   |
     // | 3 |   |   |   |   |   | B |   |   |
-    // | 2 | W |   |   |   | W |   |   |   |
+    // | 2 | Ẅ |   |   |   | Ẅ |   |   |   |
     // | 1 |   | B |   |   |   |   |   |   |
     // | 0 |   |   | B |   |   |   |   |   |
     // | - | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
