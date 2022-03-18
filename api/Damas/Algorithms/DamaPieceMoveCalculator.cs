@@ -32,59 +32,44 @@ namespace Damas.Algorithms
 
             foreach (var direction in directions)
             {
-                var previous = node.Value;
-                var append = false;
-
-                foreach (var position in direction)
+                foreach (var position in direction.positions)
                 {
-                    var current = match.GetPieceAt(position);
-
-                    if (current == null)
+                    if (match.IsPositionAvaialable(position))
                     {
-                        if (append)
-                        {
-                            var child = node.Append(position);
-
-                            var backup = match.GetPieceAt(previous);
-
-                            if (backup == null)
-                            {
-                                throw new NullPieceException();
-                            }
-
-                            piece.Position = position;
-                            match.CapturePiece(backup);
-
-                            CalculateCaptureMoves(match, piece, child);
-
-                            piece.Position = node.Value;
-                            match.RestorePiece(backup);
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    else
+
+                    if (match.IsPositionOccupiedByCurrentPlayer(position))
                     {
-                        if (current.IsCaptured)
-                        {
-                            continue;
-                        }
-
-                        if (append)
-                        {
-                            break;
-                        }
-
-                        if (current.Color == piece.Color)
-                        {
-                            break;
-                        }
-
-                        append = true;
-                        previous = position;
+                        break;
                     }
+
+                    var positions = GetPositions(position, (position) =>
+                    {
+                        return match.IsPositionAvaialable(position);
+                    }, direction.move);
+
+                    foreach (var current in positions)
+                    {
+                        var child = node.Append(current);
+
+                        var backup = match.GetPieceAt(position);
+
+                        if (backup == null)
+                        {
+                            throw new NullPieceException();
+                        }
+
+                        piece.Position = current;
+                        match.CapturePiece(backup);
+
+                        CalculateCaptureMoves(match, piece, child);
+
+                        piece.Position = node.Value;
+                        match.RestorePiece(backup);
+                    }
+
+                    break;
                 }
             }
         }
@@ -98,19 +83,19 @@ namespace Damas.Algorithms
 
             foreach (var direction in directions)
             {
-                foreach (var position in direction)
+                foreach (var position in direction.positions)
                 {
                     node.Append(position);
                 }
             }
         }
 
-        private IEnumerable<IEnumerable<Position>> GetDirections(Position initial, Func<Position, bool> condition)
+        private IEnumerable<(IEnumerable<Position> positions, Func<Position, Position> move)> GetDirections(Position initial, Func<Position, bool> condition)
         {
-            yield return GetPositions(initial, condition, position => position.Northwest());
-            yield return GetPositions(initial, condition, position => position.Northeast());
-            yield return GetPositions(initial, condition, position => position.Southwest());
-            yield return GetPositions(initial, condition, position => position.Southeast());
+            yield return (GetPositions(initial, condition, position => position.Northwest()), position => position.Northwest());
+            yield return (GetPositions(initial, condition, position => position.Northeast()), position => position.Northeast());
+            yield return (GetPositions(initial, condition, position => position.Southwest()), position => position.Southwest());
+            yield return (GetPositions(initial, condition, position => position.Southeast()), position => position.Southeast());
         }
 
         private IEnumerable<Position> GetPositions(Position initial, Func<Position, bool> condition, Func<Position, Position> move)
