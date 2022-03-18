@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace Damas.DataStructures
 {
     public class GeneralTreeNode<T> : IGeneralTreeNode<T>
@@ -8,13 +10,16 @@ namespace Damas.DataStructures
 
         public IGeneralTreeNode<T>? Parent { get; }
 
-        public IList<IGeneralTreeNode<T>> Children { get; } = new List<IGeneralTreeNode<T>>();
+        public IReadOnlyCollection<IGeneralTreeNode<T>> Children { get => new ReadOnlyCollection<IGeneralTreeNode<T>>(_children); }
 
-        public IList<IGeneralTreeNode<T>> Nodes { get => ComputeNodes(); }
+        public IReadOnlyCollection<IGeneralTreeNode<T>> Nodes { get => ComputeNodes(); }
 
-        public IList<IGeneralTreeNode<T>> Leaves { get => ComputeLeaves(); }
+        public IReadOnlyCollection<IGeneralTreeNode<T>> Leaves { get => ComputeLeaves(); }
 
         public int Height { get => ComputeHeight(); }
+
+        private IList<IGeneralTreeNode<T>> _children { get; } = new List<IGeneralTreeNode<T>>();
+
 
         public GeneralTreeNode(T value, int depth, GeneralTreeNode<T>? parent)
         {
@@ -26,11 +31,23 @@ namespace Damas.DataStructures
         public IGeneralTreeNode<T> Append(T child)
         {
             var node = new GeneralTreeNode<T>(child, Depth + 1, this);
-            Children.Add(node);
+            _children.Add(node);
             return node;
         }
 
-        private IList<IGeneralTreeNode<T>> ComputeNodes()
+        public IGeneralTreeNode<T> Append(IGeneralTreeNode<T> child)
+        {
+            _children.Add(child);
+            return child;
+        }
+
+        public IGeneralTreeNode<T> Remove(IGeneralTreeNode<T> child)
+        {
+            _children.Remove(child);
+            return child;
+        }
+
+        private IReadOnlyCollection<IGeneralTreeNode<T>> ComputeNodes()
         {
             var nodes = new List<IGeneralTreeNode<T>>() { this };
 
@@ -48,7 +65,7 @@ namespace Damas.DataStructures
             }
         }
 
-        private IList<IGeneralTreeNode<T>> ComputeLeaves()
+        private IReadOnlyCollection<IGeneralTreeNode<T>> ComputeLeaves()
         {
             var leaves = new List<IGeneralTreeNode<T>>();
 

@@ -4,9 +4,9 @@ namespace Damas.DataStructures
     {
         IGeneralTreeNode<T> Root { get; }
 
-        IList<IGeneralTreeNode<T>> Nodes { get; }
+        IReadOnlyCollection<IGeneralTreeNode<T>> Nodes { get; }
 
-        IList<IGeneralTreeNode<T>> Leaves { get; }
+        IReadOnlyCollection<IGeneralTreeNode<T>> Leaves { get; }
 
         int Height { get; }
     }

@@ -4,11 +4,11 @@ namespace Damas.DataStructures
     {
         public IGeneralTreeNode<T> Root { get; }
 
-        public IList<IGeneralTreeNode<T>> Nodes { get => ComputeNodes(); }
+        public IReadOnlyCollection<IGeneralTreeNode<T>> Nodes { get => Root.Nodes; }
 
-        public IList<IGeneralTreeNode<T>> Leaves { get => ComputeLeaves(); }
+        public IReadOnlyCollection<IGeneralTreeNode<T>> Leaves { get => Root.Leaves; }
 
-        public int Height { get => ComputeHeight(); }
+        public int Height { get => Root.Height; }
 
         public GeneralTree(IGeneralTreeNode<T> root)
         {
@@ -18,21 +18,6 @@ namespace Damas.DataStructures
         public GeneralTree(T root)
         {
             Root = new GeneralTreeNode<T>(root, 0, null);
-        }
-
-        private IList<IGeneralTreeNode<T>> ComputeNodes()
-        {
-            return Root.Nodes;
-        }
-
-        private IList<IGeneralTreeNode<T>> ComputeLeaves()
-        {
-            return Root.Leaves;
-        }
-
-        private int ComputeHeight()
-        {
-            return Root.Height;
         }
     }
 }

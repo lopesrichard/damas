@@ -8,14 +8,18 @@ namespace Damas.DataStructures
 
         IGeneralTreeNode<T>? Parent { get; }
 
-        IList<IGeneralTreeNode<T>> Children { get; }
+        IReadOnlyCollection<IGeneralTreeNode<T>> Children { get; }
 
-        IList<IGeneralTreeNode<T>> Nodes { get; }
+        IReadOnlyCollection<IGeneralTreeNode<T>> Nodes { get; }
 
-        IList<IGeneralTreeNode<T>> Leaves { get; }
+        IReadOnlyCollection<IGeneralTreeNode<T>> Leaves { get; }
 
         int Height { get; }
 
         IGeneralTreeNode<T> Append(T child);
+
+        IGeneralTreeNode<T> Append(IGeneralTreeNode<T> child);
+
+        IGeneralTreeNode<T> Remove(IGeneralTreeNode<T> child);
     }
 }
