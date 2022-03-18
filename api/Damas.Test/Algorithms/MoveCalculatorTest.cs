@@ -71,7 +71,7 @@ public class MoveCalculatorTest
         var match = GetCaptureTestCase();
         var moves = calculator.Calculate(match);
         var tree = moves.First().Value;
-        Assert.AreEqual(15, tree.CountNodes());
+        Assert.AreEqual(15, tree.Nodes.Count());
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class MoveCalculatorTest
         var match = GetCaptureTestCase();
         var moves = calculator.Calculate(match);
         var tree = moves.First().Value;
-        Assert.AreEqual(8, tree.CountLeaves());
+        Assert.AreEqual(8, tree.Leaves.Count());
     }
 
     [Test]
@@ -170,17 +170,17 @@ public class MoveCalculatorTest
         Assert.That(moves, Has.Count.EqualTo(3));
 
         var firstTree = moves.First().Value;
-        Assert.AreEqual(3, firstTree.CountNodes());
+        Assert.AreEqual(3, firstTree.Nodes.Count());
         Assert.AreEqual(new Position(1, 1), firstTree.Root.Value);
         Assert.That(firstTree.Root.Children, Has.Count.EqualTo(2));
 
         var secondTree = moves.Skip(1).First().Value;
-        Assert.AreEqual(2, secondTree.CountNodes());
+        Assert.AreEqual(2, secondTree.Nodes.Count());
         Assert.AreEqual(new Position(3, 1), secondTree.Root.Value);
         Assert.That(secondTree.Root.Children, Has.Count.EqualTo(1));
 
         var thirdTree = moves.Skip(2).First().Value;
-        Assert.AreEqual(1, thirdTree.CountNodes());
+        Assert.AreEqual(1, thirdTree.Nodes.Count());
         Assert.AreEqual(new Position(5, 1), thirdTree.Root.Value);
         Assert.That(thirdTree.Root.Children, Is.Empty);
     }
@@ -300,7 +300,7 @@ public class MoveCalculatorTest
         Assert.That(moves, Has.Count.EqualTo(3));
 
         var firstTree = moves.First().Value;
-        Assert.AreEqual(7, firstTree.CountNodes());
+        Assert.AreEqual(7, firstTree.Nodes.Count());
         Assert.AreEqual(new Position(1, 5), firstTree.Root.Value);
         Assert.That(firstTree.Root.Children, Has.Count.EqualTo(6));
 
