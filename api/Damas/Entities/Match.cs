@@ -53,6 +53,11 @@ namespace Damas.Entities
             return IsValidPosition(position) && Board.IsPositionOccupied(position);
         }
 
+        public bool IsPositionOccupiedByCurrentPlayer(Position position)
+        {
+            return IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color);
+        }
+
         public bool IsPositionOccupiedByOpponent(Position position)
         {
             return IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color.Opposite());
