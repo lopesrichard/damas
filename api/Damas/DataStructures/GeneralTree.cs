@@ -16,52 +16,17 @@ namespace Damas.DataStructures
 
         public HashSet<GeneralTreeNode<T>> Nodes()
         {
-            var nodes = new HashSet<GeneralTreeNode<T>>() { Root };
-
-            Nodes(Root, nodes);
-
-            return nodes;
-        }
-
-        private void Nodes(GeneralTreeNode<T> node, HashSet<GeneralTreeNode<T>> nodes)
-        {
-            foreach (var child in node.Children)
-            {
-                nodes.Add(child);
-                Nodes(child, nodes);
-            }
-        }
-
-        public int CountNodes()
-        {
-            return Nodes().Count();
+            return Root.Nodes();
         }
 
         public HashSet<GeneralTreeNode<T>> Leaves()
         {
-            var leaves = new HashSet<GeneralTreeNode<T>>();
-
-            Leaves(Root, leaves);
-
-            return leaves;
+            return Root.Leaves();
         }
 
-        private void Leaves(GeneralTreeNode<T> node, HashSet<GeneralTreeNode<T>> leaves)
+        public int Height()
         {
-            if (node.Children.Count == 0)
-            {
-                leaves.Add(node);
-            }
-
-            foreach (var child in node.Children)
-            {
-                Leaves(child, leaves);
-            }
-        }
-
-        public int CountLeaves()
-        {
-            return Leaves().Count();
+            return Root.Height();
         }
     }
 }
