@@ -1,6 +1,7 @@
 using Damas.DataStructures;
 using Damas.Entities;
 using Damas.Enums;
+using Damas.Exceptions;
 using Damas.Structs;
 
 namespace Damas.Algorithms
@@ -38,6 +39,11 @@ namespace Damas.Algorithms
                 var child = node.Append(nearest2);
 
                 var backup = match.GetPieceAt(nearest1);
+
+                if (backup == null)
+                {
+                    throw new NullPieceException();
+                }
 
                 piece.Position = nearest2;
                 match.CapturePiece(backup);
