@@ -11,7 +11,7 @@ namespace Damas.DataStructures
 
         public GeneralTree(T root)
         {
-            Root = new GeneralTreeNode<T>(root);
+            Root = new GeneralTreeNode<T>(root, 0, null);
         }
 
         public HashSet<GeneralTreeNode<T>> Nodes()
