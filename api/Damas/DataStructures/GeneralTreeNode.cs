@@ -1,15 +1,19 @@
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace Damas.DataStructures
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class GeneralTreeNode<T> : IGeneralTreeNode<T>
     {
+        [JsonProperty]
         public T Value { get; }
 
         public int Depth { get; }
 
         public IGeneralTreeNode<T>? Parent { get; }
 
+        [JsonProperty]
         public IReadOnlyCollection<IGeneralTreeNode<T>> Children { get => new ReadOnlyCollection<IGeneralTreeNode<T>>(_children); }
 
         public IReadOnlyCollection<IGeneralTreeNode<T>> Nodes { get => ComputeNodes(); }
