@@ -100,10 +100,7 @@ namespace Damas.Algorithms
             {
                 foreach (var position in direction)
                 {
-                    if (match.IsPositionAvaialable(position))
-                    {
-                        node.Append(position);
-                    }
+                    node.Append(position);
                 }
             }
         }
