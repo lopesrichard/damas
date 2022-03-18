@@ -1,13 +1,20 @@
 namespace Damas.DataStructures
 {
-    public class GeneralTreeNode<T>
+    public class GeneralTreeNode<T> : IGeneralTreeNode<T>
     {
-        public T Value { get; set; }
-        public int Depth { get; set; }
+        public T Value { get; }
 
-        public GeneralTreeNode<T>? Parent { get; set; }
+        public int Depth { get; }
 
-        public List<GeneralTreeNode<T>> Children = new List<GeneralTreeNode<T>>();
+        public IGeneralTreeNode<T>? Parent { get; }
+
+        public IList<IGeneralTreeNode<T>> Children { get; } = new List<IGeneralTreeNode<T>>();
+
+        public IList<IGeneralTreeNode<T>> Nodes { get => ComputeNodes(); }
+
+        public IList<IGeneralTreeNode<T>> Leaves { get => ComputeLeaves(); }
+
+        public int Height { get => ComputeHeight(); }
 
         public GeneralTreeNode(T value, int depth, GeneralTreeNode<T>? parent)
         {
@@ -16,41 +23,41 @@ namespace Damas.DataStructures
             Parent = parent;
         }
 
-        public GeneralTreeNode<T> Append(T child)
+        public IGeneralTreeNode<T> Append(T child)
         {
             var node = new GeneralTreeNode<T>(child, Depth + 1, this);
             Children.Add(node);
             return node;
         }
 
-        public HashSet<GeneralTreeNode<T>> Nodes()
+        private IList<IGeneralTreeNode<T>> ComputeNodes()
         {
-            var nodes = new HashSet<GeneralTreeNode<T>>() { this };
+            var nodes = new List<IGeneralTreeNode<T>>() { this };
 
-            Nodes(this, nodes);
+            ComputeNodes(this, nodes);
 
             return nodes;
         }
 
-        private void Nodes(GeneralTreeNode<T> node, HashSet<GeneralTreeNode<T>> nodes)
+        private void ComputeNodes(IGeneralTreeNode<T> node, IList<IGeneralTreeNode<T>> nodes)
         {
             foreach (var child in node.Children)
             {
                 nodes.Add(child);
-                Nodes(child, nodes);
+                ComputeNodes(child, nodes);
             }
         }
 
-        public HashSet<GeneralTreeNode<T>> Leaves()
+        private IList<IGeneralTreeNode<T>> ComputeLeaves()
         {
-            var leaves = new HashSet<GeneralTreeNode<T>>();
+            var leaves = new List<IGeneralTreeNode<T>>();
 
-            Leaves(this, leaves);
+            ComputeLeaves(this, leaves);
 
             return leaves;
         }
 
-        private void Leaves(GeneralTreeNode<T> node, HashSet<GeneralTreeNode<T>> leaves)
+        private void ComputeLeaves(IGeneralTreeNode<T> node, IList<IGeneralTreeNode<T>> leaves)
         {
             if (node.Children.Count == 0)
             {
@@ -59,13 +66,13 @@ namespace Damas.DataStructures
 
             foreach (var child in node.Children)
             {
-                Leaves(child, leaves);
+                ComputeLeaves(child, leaves);
             }
         }
 
-        public int Height()
+        private int ComputeHeight()
         {
-            return Leaves().Max(leave => leave.Depth) - Depth;
+            return Leaves.Max(leave => leave.Depth) - Depth;
         }
     }
 }

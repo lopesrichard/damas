@@ -1,10 +1,16 @@
 namespace Damas.DataStructures
 {
-    public class GeneralTree<T>
+    public class GeneralTree<T> : IGeneralTree<T>
     {
-        public GeneralTreeNode<T> Root { get; set; }
+        public IGeneralTreeNode<T> Root { get; }
 
-        public GeneralTree(GeneralTreeNode<T> root)
+        public IList<IGeneralTreeNode<T>> Nodes { get => ComputeNodes(); }
+
+        public IList<IGeneralTreeNode<T>> Leaves { get => ComputeLeaves(); }
+
+        public int Height { get => ComputeHeight(); }
+
+        public GeneralTree(IGeneralTreeNode<T> root)
         {
             Root = root;
         }
@@ -14,19 +20,19 @@ namespace Damas.DataStructures
             Root = new GeneralTreeNode<T>(root, 0, null);
         }
 
-        public HashSet<GeneralTreeNode<T>> Nodes()
+        private IList<IGeneralTreeNode<T>> ComputeNodes()
         {
-            return Root.Nodes();
+            return Root.Nodes;
         }
 
-        public HashSet<GeneralTreeNode<T>> Leaves()
+        private IList<IGeneralTreeNode<T>> ComputeLeaves()
         {
-            return Root.Leaves();
+            return Root.Leaves;
         }
 
-        public int Height()
+        private int ComputeHeight()
         {
-            return Root.Height();
+            return Root.Height;
         }
     }
 }
