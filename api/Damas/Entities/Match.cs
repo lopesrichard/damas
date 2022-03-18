@@ -58,7 +58,7 @@ namespace Damas.Entities
             return IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color.Opposite());
         }
 
-        public Piece GetPieceAt(Position position)
+        public Piece? GetPieceAt(Position position)
         {
             return Board.GetPieceAt(position);
         }

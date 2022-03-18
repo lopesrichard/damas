@@ -40,9 +40,9 @@ namespace Damas.Entities
             return Pieces.Any(p => p.Position == position && !p.IsCaptured && p.Color == color);
         }
 
-        public Piece GetPieceAt(Position position)
+        public Piece? GetPieceAt(Position position)
         {
-            return Pieces.Single(piece => piece.Position == position);
+            return Pieces.SingleOrDefault(piece => piece.Position == position);
         }
 
         public void AddPiece(Piece piece)
