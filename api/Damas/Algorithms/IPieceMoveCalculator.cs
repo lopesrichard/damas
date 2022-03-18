@@ -6,6 +6,6 @@ namespace Damas.Algorithms
 {
     public interface IPieceMoveCalculator
     {
-        GeneralTree<Position> Calculate(Match match, Piece piece);
+        IGeneralTree<Position> Calculate(Match match, Piece piece);
     }
 }

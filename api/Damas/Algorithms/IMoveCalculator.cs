@@ -6,6 +6,6 @@ namespace Damas.Algorithms
 {
     public interface IMoveCalculator
     {
-        IDictionary<Guid, GeneralTree<Position>> Calculate(Match match);
+        IDictionary<Guid, IGeneralTree<Position>> Calculate(Match match);
     }
 }

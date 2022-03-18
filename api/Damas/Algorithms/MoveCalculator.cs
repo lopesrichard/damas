@@ -6,7 +6,7 @@ namespace Damas.Algorithms
 {
     public class MoveCalculator : IMoveCalculator
     {
-        public IDictionary<Guid, GeneralTree<Position>> Calculate(Match match)
+        public IDictionary<Guid, IGeneralTree<Position>> Calculate(Match match)
         {
             var pieces = match.GetCurrentPlayerPieces();
 

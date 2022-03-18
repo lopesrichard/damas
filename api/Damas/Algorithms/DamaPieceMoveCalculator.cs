@@ -7,7 +7,7 @@ namespace Damas.Algorithms
 {
     public class DamaPieceMoveCalculator : IPieceMoveCalculator
     {
-        public GeneralTree<Position> Calculate(Match match, Piece piece)
+        public IGeneralTree<Position> Calculate(Match match, Piece piece)
         {
             var tree = new GeneralTree<Position>(piece.Position);
 
@@ -23,7 +23,7 @@ namespace Damas.Algorithms
             return tree;
         }
 
-        private void CalculateCaptureMoves(Match match, Piece piece, GeneralTreeNode<Position> node)
+        private void CalculateCaptureMoves(Match match, Piece piece, IGeneralTreeNode<Position> node)
         {
             var directions = GetDirections(node.Value, (position) =>
            {
@@ -74,7 +74,7 @@ namespace Damas.Algorithms
             }
         }
 
-        private void CalculateNonCaptureMoves(Match match, GeneralTreeNode<Position> node)
+        private void CalculateNonCaptureMoves(Match match, IGeneralTreeNode<Position> node)
         {
             var directions = GetDirections(node.Value, (position) =>
             {

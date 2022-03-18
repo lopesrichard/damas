@@ -8,7 +8,7 @@ namespace Damas.Algorithms
 {
     public class RegularPieceMoveCalculator : IPieceMoveCalculator
     {
-        public GeneralTree<Position> Calculate(Match match, Piece piece)
+        public IGeneralTree<Position> Calculate(Match match, Piece piece)
         {
             var tree = new GeneralTree<Position>(piece.Position);
 
@@ -24,7 +24,7 @@ namespace Damas.Algorithms
             return tree;
         }
 
-        private void CalculateCaptureMoves(Match match, Piece piece, GeneralTreeNode<Position> node)
+        private void CalculateCaptureMoves(Match match, Piece piece, IGeneralTreeNode<Position> node)
         {
             CalculateCaptureMoves(match, piece, node, node.Value.Northwest(1), node.Value.Northwest(2));
             CalculateCaptureMoves(match, piece, node, node.Value.Northeast(1), node.Value.Northeast(2));
@@ -32,7 +32,7 @@ namespace Damas.Algorithms
             CalculateCaptureMoves(match, piece, node, node.Value.Southeast(1), node.Value.Southeast(2));
         }
 
-        private void CalculateCaptureMoves(Match match, Piece piece, GeneralTreeNode<Position> node, Position nearest1, Position nearest2)
+        private void CalculateCaptureMoves(Match match, Piece piece, IGeneralTreeNode<Position> node, Position nearest1, Position nearest2)
         {
             if (match.IsPositionOccupiedByOpponent(nearest1) && match.IsPositionAvaialable(nearest2))
             {
@@ -55,7 +55,7 @@ namespace Damas.Algorithms
             }
         }
 
-        private void CalculateNonCaptureMoves(Match match, GeneralTreeNode<Position> node)
+        private void CalculateNonCaptureMoves(Match match, IGeneralTreeNode<Position> node)
         {
             var position = node.Value;
 
