@@ -21,7 +21,7 @@ namespace Damas.DataStructures
         private IList<IGeneralTreeNode<T>> _children { get; } = new List<IGeneralTreeNode<T>>();
 
 
-        public GeneralTreeNode(T value, int depth, GeneralTreeNode<T>? parent)
+        public GeneralTreeNode(T value, int depth, IGeneralTreeNode<T>? parent)
         {
             Value = value;
             Depth = depth;
