@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd Damas.Test
+cd Damas.Core.Test
 
 rm -rf TestResults
 rm -rf TestReports
