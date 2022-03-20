@@ -12,7 +12,7 @@ namespace Damas.Validators
         public IEnumerable<Exception> ValidatePosition(Board board, Piece piece)
         {
             var validator = new PositionValidator();
-            return validator.Validate(board, piece.Position);
+            return validator.Validate(board.Size, piece.Position);
         }
     }
 }

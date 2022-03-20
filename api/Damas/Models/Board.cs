@@ -3,14 +3,14 @@ using Damas.Enums;
 using Damas.Structs;
 using Damas.Validators;
 
-namespace Damas.Entities
+namespace Damas.Models
 {
-    public class Board : Entity
+    public class Board
     {
         public BoardSize Size { get; set; }
         public ICollection<Piece> Pieces { get; set; }
 
-        public Board(Guid id, BoardSize size, ICollection<Piece> pieces) : base(id)
+        public Board(BoardSize size, ICollection<Piece> pieces)
         {
             Size = size;
             Pieces = pieces;

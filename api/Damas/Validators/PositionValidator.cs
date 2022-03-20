@@ -7,12 +7,7 @@ namespace Damas.Validators
 {
     public class PositionValidator
     {
-        public IEnumerable<Exception> Validate(Board board, Position position)
-        {
-            return ValidateCoordinates(board.Size, position);
-        }
-
-        public IEnumerable<Exception> ValidateCoordinates(BoardSize size, Position position)
+        public IEnumerable<Exception> Validate(BoardSize size, Position position)
         {
             var exceptions = new List<Exception>();
 
