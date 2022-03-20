@@ -1,4 +1,4 @@
-using Damas.Structs;
+using Damas.Core.Structs;
 
 namespace Damas.Data.Entities
 {

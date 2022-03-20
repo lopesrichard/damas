@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using Damas.Algorithms;
-using Damas.Enums;
-using Damas.Models;
-using Damas.Structs;
+using Damas.Core.Algorithms;
+using Damas.Core.Enums;
+using Damas.Core.Models;
+using Damas.Core.Structs;
 using NUnit.Framework;
 
 namespace Damas.Test.Algorithms;

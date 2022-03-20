@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Damas.Enums;
-using Damas.Exceptions;
-using Damas.Models;
-using Damas.Structs;
-using Damas.Validators;
+using Damas.Core.Enums;
+using Damas.Core.Exceptions;
+using Damas.Core.Models;
+using Damas.Core.Structs;
+using Damas.Core.Validators;
 using NUnit.Framework;
 
 namespace Damas.Test.Validators;

@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Damas.Algorithms;
-using Damas.Enums;
-using Damas.Models;
-using Damas.Serialization;
-using Damas.Structs;
+using Damas.Core.Algorithms;
+using Damas.Core.Enums;
+using Damas.Core.Models;
+using Damas.Core.Structs;
 using NUnit.Framework;
 
 namespace Damas.Test.Algorithms;
@@ -164,10 +162,7 @@ public class MoveSelectorTest
         Assert.AreEqual(new Position(6, 4), moves.ElementAt(0).Root.Children.ElementAt(1).Children.ElementAt(0).Children.ElementAt(1).Value);
 
         var selector = new MoveSelector();
-
         var selected = moves.Select(selector.Select);
-
-        var json = selected.Serialize();
 
         // After selection
         Assert.That(selected.ElementAt(0).Root.Children, Has.Count.EqualTo(2));

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Damas.Serialization;
+using Damas.Core.Serialization;
 using NUnit.Framework;
 
 namespace Damas.Test.Serialization

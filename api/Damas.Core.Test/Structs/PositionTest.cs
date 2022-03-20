@@ -1,4 +1,4 @@
-using Damas.Structs;
+using Damas.Core.Structs;
 using NUnit.Framework;
 
 namespace Damas.Test.Validators;

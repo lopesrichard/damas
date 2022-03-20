@@ -1,4 +1,4 @@
-using Damas.Enums;
+using Damas.Core.Enums;
 
 namespace Damas.Data.Entities
 {
