@@ -1,7 +1,6 @@
-using System.Reflection.Metadata.Ecma335;
-using Damas.Entities;
 using Damas.Enums;
 using Damas.Exceptions;
+using Damas.Models;
 
 namespace Damas.Validators
 {

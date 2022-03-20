@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Damas.Entities;
 using Damas.Enums;
 using Damas.Exceptions;
+using Damas.Models;
 using Damas.Structs;
 using Damas.Validators;
 using NUnit.Framework;
@@ -16,7 +16,7 @@ public class BoardValidatorTest
     {
         var validator = new BoardValidator();
 
-        var board = new Board(Guid.NewGuid(), BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>());
+        var board = new Board(BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>());
 
         Assert.That(validator.Validate(board), Has.Some.InstanceOf<NotEnoughPiecesException>());
     }
@@ -26,21 +26,21 @@ public class BoardValidatorTest
     {
         var validator = new BoardValidator();
 
-        var board = new Board(Guid.NewGuid(), BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>()
+        var board = new Board(BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>()
         {
-            new Piece(Guid.NewGuid(), new Position(0, 0), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(0, 2), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(0, 4), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(0, 6), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(2, 0), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(2, 2), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(2, 4), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(2, 6), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(4, 0), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(4, 2), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(4, 4), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(4, 6), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(4, 6), Color.WHITE, false, false),
+            new Piece(new Position(0, 0), Color.WHITE, false, false),
+            new Piece(new Position(0, 2), Color.WHITE, false, false),
+            new Piece(new Position(0, 4), Color.WHITE, false, false),
+            new Piece(new Position(0, 6), Color.WHITE, false, false),
+            new Piece(new Position(2, 0), Color.WHITE, false, false),
+            new Piece(new Position(2, 2), Color.WHITE, false, false),
+            new Piece(new Position(2, 4), Color.WHITE, false, false),
+            new Piece(new Position(2, 6), Color.WHITE, false, false),
+            new Piece(new Position(4, 0), Color.WHITE, false, false),
+            new Piece(new Position(4, 2), Color.WHITE, false, false),
+            new Piece(new Position(4, 4), Color.WHITE, false, false),
+            new Piece(new Position(4, 6), Color.WHITE, false, false),
+            new Piece(new Position(4, 6), Color.WHITE, false, false),
         });
 
         Assert.That(validator.Validate(board), Has.Some.InstanceOf<TooManyPiecesException>());
@@ -51,10 +51,10 @@ public class BoardValidatorTest
     {
         var validator = new BoardValidator();
 
-        var board = new Board(Guid.NewGuid(), BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>()
+        var board = new Board(BoardSize.SIXTY_FOUR_SQUARES, new List<Piece>()
         {
-            new Piece(Guid.NewGuid(), new Position(0, 0), Color.WHITE, false, false),
-            new Piece(Guid.NewGuid(), new Position(0, 0), Color.WHITE, false, false),
+            new Piece(new Position(0, 0), Color.WHITE, false, false),
+            new Piece(new Position(0, 0), Color.WHITE, false, false),
         });
 
         Assert.That(validator.Validate(board), Has.Some.InstanceOf<PieceInSamePositionException>());

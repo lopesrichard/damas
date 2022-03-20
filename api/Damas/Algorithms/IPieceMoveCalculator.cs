@@ -1,5 +1,5 @@
 using Damas.DataStructures;
-using Damas.Entities;
+using Damas.Models;
 using Damas.Structs;
 
 namespace Damas.Algorithms

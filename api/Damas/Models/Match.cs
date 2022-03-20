@@ -6,36 +6,30 @@ namespace Damas.Models
     public class Match
     {
         public Player PlayerOne { get; set; }
-        public Guid PlayerOneId { get; set; }
         public Player PlayerTwo { get; set; }
-        public Guid PlayerTwoId { get; set; }
+        public Color PlayerOneColor { get; set; }
+        public Color PlayerTwoColor { get; set; }
         public Board Board { get; set; }
-        public Guid BoardId { get; set; }
-        public Player CurrentPlayer { get; set; }
-        public Guid CurrentPlayerId { get; set; }
-        public ICollection<Piece> Captures { get; set; }
+        public Color TurnColor { get; set; }
 
-        public Match(Player playerOne, Guid playerOneId, Player playerTwo, Guid playerTwoId, Board board, Guid boardId, Player currentPlayer, Guid currentPlayerId, ICollection<Piece> captures)
+        public Match(Player playerOne, Color playerOneColor, Player playerTwo, Color playerTwoColor, Board board, Color turnColor)
         {
             PlayerOne = playerOne;
-            PlayerOneId = playerOneId;
+            PlayerOneColor = playerOneColor;
+            PlayerTwoColor = playerTwoColor;
             PlayerTwo = playerTwo;
-            PlayerTwoId = playerTwoId;
             Board = board;
-            BoardId = boardId;
-            CurrentPlayer = currentPlayer;
-            CurrentPlayerId = currentPlayerId;
-            Captures = captures;
+            TurnColor = turnColor;
         }
 
-        public IEnumerable<Piece> GetCurrentPlayerPieces()
+        public IEnumerable<Piece> GetPlayerPieces()
         {
-            return Board.Pieces.Where(piece => piece.Color == CurrentPlayer.Color);
+            return Board.Pieces.Where(piece => piece.Color == TurnColor);
         }
 
         public IEnumerable<Piece> GetOpponentPieces()
         {
-            return Board.Pieces.Where(piece => piece.Color != CurrentPlayer.Color);
+            return Board.Pieces.Where(piece => piece.Color != TurnColor);
         }
 
         public bool IsValidPosition(Position position)
@@ -53,14 +47,14 @@ namespace Damas.Models
             return IsValidPosition(position) && Board.IsPositionOccupied(position);
         }
 
-        public bool IsPositionOccupiedByCurrentPlayer(Position position)
+        public bool IsPositionOccupiedByPlayer(Position position)
         {
-            return IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color);
+            return IsValidPosition(position) && Board.IsPositionOccupied(position, TurnColor);
         }
 
         public bool IsPositionOccupiedByOpponent(Position position)
         {
-            return IsValidPosition(position) && Board.IsPositionOccupied(position, CurrentPlayer.Color.Opposite());
+            return IsValidPosition(position) && Board.IsPositionOccupied(position, TurnColor.Opposite());
         }
 
         public Piece? GetPieceAt(Position position)
@@ -76,17 +70,6 @@ namespace Damas.Models
         public void RestorePiece(Piece piece)
         {
             piece.IsCaptured = false;
-        }
-
-        public void CommitCaptures()
-        {
-            var pieces = Board.Pieces.Where(piece => piece.IsCaptured);
-
-            foreach (var piece in pieces)
-            {
-                Captures.Add(piece);
-                Board.RemovePiece(piece);
-            }
         }
     }
 }

@@ -1,7 +1,7 @@
 using Damas.DataStructures;
-using Damas.Entities;
 using Damas.Enums;
 using Damas.Exceptions;
+using Damas.Models;
 using Damas.Structs;
 
 namespace Damas.Algorithms
@@ -59,8 +59,8 @@ namespace Damas.Algorithms
         {
             var position = node.Value;
 
-            var nearest1 = match.CurrentPlayer.Color == Color.WHITE ? position.Northwest(1) : position.Southwest(1);
-            var nearest2 = match.CurrentPlayer.Color == Color.WHITE ? position.Northeast(1) : position.Southeast(1);
+            var nearest1 = match.TurnColor == Color.WHITE ? position.Northwest(1) : position.Southwest(1);
+            var nearest2 = match.TurnColor == Color.WHITE ? position.Northeast(1) : position.Southeast(1);
 
             if (match.IsPositionAvaialable(nearest1))
             {

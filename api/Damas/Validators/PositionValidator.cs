@@ -1,6 +1,6 @@
-using Damas.Entities;
 using Damas.Enums;
 using Damas.Exceptions;
+using Damas.Models;
 using Damas.Structs;
 
 namespace Damas.Validators

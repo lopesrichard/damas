@@ -1,6 +1,6 @@
 using Damas.DataStructures;
-using Damas.Entities;
 using Damas.Exceptions;
+using Damas.Models;
 using Damas.Structs;
 
 namespace Damas.Algorithms
@@ -39,7 +39,7 @@ namespace Damas.Algorithms
                         continue;
                     }
 
-                    if (match.IsPositionOccupiedByCurrentPlayer(position))
+                    if (match.IsPositionOccupiedByPlayer(position))
                     {
                         break;
                     }

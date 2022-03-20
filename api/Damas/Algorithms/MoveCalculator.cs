@@ -1,16 +1,16 @@
 using Damas.DataStructures;
-using Damas.Entities;
+using Damas.Models;
 using Damas.Structs;
 
 namespace Damas.Algorithms
 {
     public class MoveCalculator : IMoveCalculator
     {
-        public IDictionary<Guid, IGeneralTree<Position>> Calculate(Match match)
+        public IEnumerable<IGeneralTree<Position>> Calculate(Match match)
         {
-            var pieces = match.GetCurrentPlayerPieces();
+            var pieces = match.GetPlayerPieces();
 
-            return pieces.ToList().ToDictionary(piece => piece.Id, piece => GetCalculator(piece).Calculate(match, piece));
+            return pieces.ToList().Select(piece => GetCalculator(piece).Calculate(match, piece));
         }
 
         private IPieceMoveCalculator GetCalculator(Piece piece)

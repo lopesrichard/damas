@@ -1,11 +1,11 @@
 using Damas.DataStructures;
-using Damas.Entities;
+using Damas.Models;
 using Damas.Structs;
 
 namespace Damas.Algorithms
 {
     public interface IMoveCalculator
     {
-        IDictionary<Guid, IGeneralTree<Position>> Calculate(Match match);
+        IEnumerable<IGeneralTree<Position>> Calculate(Match match);
     }
 }

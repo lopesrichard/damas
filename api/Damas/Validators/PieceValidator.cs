@@ -1,4 +1,4 @@
-using Damas.Entities;
+using Damas.Models;
 
 namespace Damas.Validators
 {
