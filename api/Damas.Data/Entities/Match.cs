@@ -1,6 +1,6 @@
 using Damas.Enums;
 
-namespace Damas.Entities
+namespace Damas.Data.Entities
 {
     public class Match : Entity
     {

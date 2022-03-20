@@ -1,7 +1,7 @@
 using Damas.Enums;
 using Damas.Structs;
 
-namespace Damas.Entities
+namespace Damas.Data.Entities
 {
     public class Piece : Entity
     {

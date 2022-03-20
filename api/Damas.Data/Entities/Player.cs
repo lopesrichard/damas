@@ -1,4 +1,4 @@
-namespace Damas.Entities
+namespace Damas.Data.Entities
 {
     public class Player : Entity
     {
