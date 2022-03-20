@@ -13,6 +13,7 @@ namespace Damas.Entities
         public Player? PlayerOne { get; set; }
         public Player? PlayerTwo { get; set; }
         public ICollection<Piece>? Pieces { get; set; }
+        public ICollection<Move>? Moves { get; set; }
 
         public Match(Guid id, Guid playerOneId, Color playerOneColor, Guid playerTwoId, Color playerTwoColor, Color turnColor, BoardSize boardSize) : base(id)
         {
