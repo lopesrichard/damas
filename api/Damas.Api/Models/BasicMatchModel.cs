@@ -8,7 +8,21 @@ namespace Damas.Api.Models
     {
         public static Expression<Func<Match, BasicMatchModel>> Selector
         {
-            get => (Match match) => FromEntity(match);
+            get => (Match match) => new BasicMatchModel(
+                match.Id,
+                match.PlayerOneId,
+                match.PlayerOneColor,
+                match.PlayerTwoId,
+                match.PlayerTwoColor,
+                match.TurnColor,
+                match.BoardSize,
+                match.Pieces.Select(piece => new BasicPieceModel(
+                    piece.Id,
+                    piece.Position,
+                    piece.Color,
+                    piece.IsDama,
+                    piece.IsCaptured
+                )));
         }
 
         public static Func<Match, BasicMatchModel> FromEntity

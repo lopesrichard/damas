@@ -7,7 +7,7 @@ namespace Damas.Api.Models
     {
         public static Expression<Func<Player, BasicPlayerModel>> Selector
         {
-            get => (Player player) => FromEntity(player);
+            get => (Player player) => new BasicPlayerModel(player.Id, player.Name);
         }
 
         public static Func<Player, BasicPlayerModel> FromEntity
