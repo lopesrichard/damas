@@ -24,13 +24,29 @@ namespace Damas.Api.Controllers
             return new OkObjectResult(result);
         }
 
-        [HttpGet("{id}/possible-moves")]
-        public async Task<IActionResult> GetPossibleMoves(
+        [HttpGet("{id}/moves")]
+        public async Task<IActionResult> ListMoves(
             [FromRoute] Guid id,
             [FromServices] IMatchService service
         )
         {
-            var result = await service.GetPossibleMoves(id);
+            var result = await service.ListMoves(id);
+
+            if (!result.IsSuccess)
+            {
+                return new BadRequestObjectResult(result);
+            }
+
+            return new OkObjectResult(result);
+        }
+
+        [HttpGet("{id}/possible-moves")]
+        public async Task<IActionResult> ListPossibleMoves(
+            [FromRoute] Guid id,
+            [FromServices] IMatchService service
+        )
+        {
+            var result = await service.ListPossibleMoves(id);
 
             if (!result.IsSuccess)
             {

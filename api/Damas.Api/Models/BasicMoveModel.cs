@@ -13,7 +13,8 @@ namespace Damas.Api.Models
                 move.PreviousPosition,
                 move.NewPosition,
                 move.CapturedPieceId,
-                move.IsPromotionMove
+                move.IsPromotionMove,
+                move.DateTime
             );
         }
 
@@ -23,8 +24,9 @@ namespace Damas.Api.Models
         public Position NewPosition { get; set; }
         public Guid? CapturedPieceId { get; set; }
         public bool IsPromotionMove { get; set; }
+        public DateTime DateTime { get; set; }
 
-        public BasicMoveModel(Guid id, Guid pieceId, Position previousPosition, Position newPosition, Guid? capturedPieceId, bool isPromotionMove)
+        public BasicMoveModel(Guid id, Guid pieceId, Position previousPosition, Position newPosition, Guid? capturedPieceId, bool isPromotionMove, DateTime dateTime)
         {
             Id = id;
             PieceId = pieceId;
@@ -32,6 +34,7 @@ namespace Damas.Api.Models
             NewPosition = newPosition;
             CapturedPieceId = capturedPieceId;
             IsPromotionMove = isPromotionMove;
+            DateTime = dateTime;
         }
     }
 }

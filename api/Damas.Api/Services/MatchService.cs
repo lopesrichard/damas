@@ -43,7 +43,24 @@ namespace Damas.Api.Services
             return new Result<BasicMatchModel>(match);
         }
 
-        public async Task<IResult<IEnumerable<NewMoveModel>>> GetPossibleMoves(Guid id)
+        public async Task<IResult<IEnumerable<BasicMoveModel>>> ListMoves(Guid id)
+        {
+            var match = await _context.Matches
+                .Include(match => match.Moves.OrderByDescending(move => move.DateTime))
+                .SingleOrDefaultAsync(match => match.Id == id);
+
+            if (match == null)
+            {
+                var message = new Message(MessageType.ERROR, $"Match {id} not found");
+                return new Result<IEnumerable<BasicMoveModel>>(message);
+            }
+
+            var moves = match.Moves.Select(BasicMoveModel.FromEntity);
+
+            return new Result<IEnumerable<BasicMoveModel>>(moves);
+        }
+
+        public async Task<IResult<IEnumerable<NewMoveModel>>> ListPossibleMoves(Guid id)
         {
             var match = await _context.Matches
                 .Include(match => match.Pieces)
