@@ -10,7 +10,14 @@ namespace Damas.Core.Algorithms
         {
             var pieces = match.GetPlayerPieces();
 
-            return pieces.ToList().Select(piece => GetCalculator(piece).Calculate(match, piece));
+            return pieces.ToList().Select(piece => Calculate(match, piece));
+        }
+
+        public IGeneralTree<Position> Calculate(Match match, Piece piece)
+        {
+            var pieces = match.GetPlayerPieces();
+
+            return GetCalculator(piece).Calculate(match, piece);
         }
 
         private IPieceMoveCalculator GetCalculator(Piece piece)

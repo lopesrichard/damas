@@ -1,9 +1,22 @@
 using Damas.Core.Structs;
+using Damas.Data.Entities;
 
 namespace Damas.Api.Models
 {
     public class BasicMoveModel
     {
+        public static Func<Move, BasicMoveModel> FromEntity
+        {
+            get => (Move move) => new BasicMoveModel(
+                move.Id,
+                move.PieceId,
+                move.PreviousPosition,
+                move.NewPosition,
+                move.CapturedPieceId,
+                move.IsPromotionMove
+            );
+        }
+
         public Guid Id { get; set; }
         public Guid PieceId { get; set; }
         public Position PreviousPosition { get; set; }

@@ -11,6 +11,10 @@ namespace Damas.Data.Entities
         public Color PlayerTwoColor { get; set; }
         public Color TurnColor { get; set; }
         public BoardSize BoardSize { get; set; }
+        public Guid? WinnerId { get; set; }
+        public bool IsDraw { get; set; }
+        public DateTime StartedAt { get; set; }
+        public DateTime? FinishedAt { get; set; }
 
         public Player PlayerOne
         {
@@ -21,6 +25,11 @@ namespace Damas.Data.Entities
         {
             get => _playerTwo ?? throw new NotIncludedException();
             set => _playerTwo = value;
+        }
+        public Player Winner
+        {
+            get => _winner ?? throw new NotIncludedException();
+            set => _winner = value;
         }
         public ICollection<Piece> Pieces
         {
@@ -35,10 +44,11 @@ namespace Damas.Data.Entities
 
         private Player? _playerOne;
         private Player? _playerTwo;
+        private Player? _winner;
         private ICollection<Piece>? _pieces;
         private ICollection<Move>? _moves;
 
-        public Match(Guid id, Guid playerOneId, Color playerOneColor, Guid playerTwoId, Color playerTwoColor, Color turnColor, BoardSize boardSize) : base(id)
+        public Match(Guid id, Guid playerOneId, Color playerOneColor, Guid playerTwoId, Color playerTwoColor, Color turnColor, BoardSize boardSize, Guid? winnerId, bool isDraw, DateTime startedAt, DateTime? finishedAt) : base(id)
         {
             PlayerOneId = playerOneId;
             PlayerOneColor = playerOneColor;
@@ -46,6 +56,10 @@ namespace Damas.Data.Entities
             PlayerTwoColor = playerTwoColor;
             TurnColor = turnColor;
             BoardSize = boardSize;
+            WinnerId = winnerId;
+            IsDraw = isDraw;
+            StartedAt = startedAt;
+            FinishedAt = finishedAt;
         }
     }
 }

@@ -5,19 +5,15 @@ namespace Damas.Core.Models
 {
     public class Match
     {
-        public Player PlayerOne { get; set; }
-        public Player PlayerTwo { get; set; }
         public Color PlayerOneColor { get; set; }
         public Color PlayerTwoColor { get; set; }
         public Board Board { get; set; }
         public Color TurnColor { get; set; }
 
-        public Match(Player playerOne, Color playerOneColor, Player playerTwo, Color playerTwoColor, Board board, Color turnColor)
+        public Match(Color playerOneColor, Color playerTwoColor, Board board, Color turnColor)
         {
-            PlayerOne = playerOne;
             PlayerOneColor = playerOneColor;
             PlayerTwoColor = playerTwoColor;
-            PlayerTwo = playerTwo;
             Board = board;
             TurnColor = turnColor;
         }
@@ -70,6 +66,41 @@ namespace Damas.Core.Models
         public void RestorePiece(Piece piece)
         {
             piece.IsCaptured = false;
+        }
+
+        public bool IsLastRow(Position position)
+        {
+            var size = (double)Board.Size;
+            var row = TurnColor == Color.WHITE ? Math.Sqrt(size) : 0;
+            return position.Y == row;
+        }
+
+        public IEnumerable<Position> GetPositionsBetween(Position a, Position b)
+        {
+            var positions = new List<Position>();
+
+            while (a != b)
+            {
+                if (b.X > a.X && b.Y > a.Y)
+                {
+                    a = a.Northeast();
+                }
+                else if (b.X > a.X && b.Y < a.Y)
+                {
+                    a = a.Southeast();
+                }
+                else if (b.X < a.X && b.Y > a.Y)
+                {
+                    a = a.Northwest();
+                }
+                else if (b.X < a.X && b.Y < a.Y)
+                {
+                    a = a.Southwest();
+                }
+                positions.Add(a);
+            }
+
+            return positions;
         }
     }
 }

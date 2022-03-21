@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Damas.Api.Services;
+using Damas.Core.Algorithms;
 using Damas.Core.Serialization;
 using Damas.Data;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,10 @@ namespace Damas
 
             builder.Services.AddScoped<IPlayerService, PlayerService>();
             builder.Services.AddScoped<IMatchService, MatchService>();
+            builder.Services.AddScoped<IMoveService, MoveService>();
+
+            builder.Services.AddScoped<IMoveCalculator, MoveCalculator>();
+            builder.Services.AddScoped<IMoveSelector, MoveSelector>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

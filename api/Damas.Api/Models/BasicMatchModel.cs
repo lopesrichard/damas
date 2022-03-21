@@ -16,6 +16,11 @@ namespace Damas.Api.Models
                 match.PlayerTwoColor,
                 match.TurnColor,
                 match.BoardSize,
+                match.WinnerId,
+                match.IsDraw,
+                match.StartedAt,
+                match.FinishedAt,
+                match.Moves.Count(),
                 match.Pieces.Select(piece => new BasicPieceModel(
                     piece.Id,
                     piece.Position,
@@ -35,6 +40,11 @@ namespace Damas.Api.Models
                 match.PlayerTwoColor,
                 match.TurnColor,
                 match.BoardSize,
+                match.WinnerId,
+                match.IsDraw,
+                match.StartedAt,
+                match.FinishedAt,
+                match.Moves.Count(),
                 match.Pieces.Select(piece => new BasicPieceModel(
                     piece.Id,
                     piece.Position,
@@ -51,9 +61,27 @@ namespace Damas.Api.Models
         public Color PlayerTwoColor { get; set; }
         public Color TurnColor { get; set; }
         public BoardSize BoardSize { get; set; }
+        public Guid? WinnerId { get; set; }
+        public bool IsDraw { get; set; }
+        public DateTime StartedAt { get; set; }
+        public DateTime? FinishedAt { get; set; }
+        public int Moves { get; set; }
         public IEnumerable<BasicPieceModel> Pieces { get; set; }
 
-        public BasicMatchModel(Guid id, Guid playerOneId, Color playerOneColor, Guid playerTwoId, Color playerTwoColor, Color turnColor, BoardSize boardSize, IEnumerable<BasicPieceModel> pieces)
+        public BasicMatchModel(
+            Guid id,
+            Guid playerOneId,
+            Color playerOneColor,
+            Guid playerTwoId,
+            Color playerTwoColor,
+            Color turnColor,
+            BoardSize boardSize,
+            Guid? winnerId,
+            bool isDraw,
+            DateTime startedAt,
+            DateTime? finishedAt,
+            int moves,
+            IEnumerable<BasicPieceModel> pieces)
         {
             Id = id;
             PlayerOneId = playerOneId;
@@ -62,6 +90,11 @@ namespace Damas.Api.Models
             PlayerTwoColor = playerTwoColor;
             TurnColor = turnColor;
             BoardSize = boardSize;
+            WinnerId = winnerId;
+            IsDraw = isDraw;
+            StartedAt = startedAt;
+            FinishedAt = finishedAt;
+            Moves = moves;
             Pieces = pieces;
         }
     }
