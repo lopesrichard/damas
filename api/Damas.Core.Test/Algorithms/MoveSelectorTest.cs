@@ -12,15 +12,12 @@ public class MoveSelectorTest
 {
     private Match BuildMatch(ICollection<Piece> pieces)
     {
-        var playerOne = new Player("Player 1");
-        var playerTwo = new Player("Player 2");
-
         var playerOneColor = Color.WHITE;
         var playerTwoColor = Color.BLACK;
 
         var board = new Board(BoardSize.SIXTY_FOUR_SQUARES, pieces);
 
-        return new Match(playerOne, playerOneColor, playerTwo, playerTwoColor, board, Color.WHITE);
+        return new Match(playerOneColor, playerTwoColor, board, Color.WHITE);
     }
 
     // ==============================================================================================
