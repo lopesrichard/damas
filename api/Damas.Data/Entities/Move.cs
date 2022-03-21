@@ -11,13 +11,18 @@ namespace Damas.Data.Entities
         public Position NewPosition { get; set; }
         public Guid? CapturedPieceId { get; set; }
         public bool IsPromotionMove { get; set; }
-        public Piece? CapturedPiece { get; set; }
         public DateTime DateTime { get; set; }
 
         public Piece Piece
         {
             get => _piece ?? throw new NotIncludedException();
             set => _piece = value;
+        }
+
+        public Piece CapturedPiece
+        {
+            get => _capturedPiece ?? throw new NotIncludedException();
+            set => _capturedPiece = value;
         }
 
         public Match Match
@@ -27,6 +32,7 @@ namespace Damas.Data.Entities
         }
 
         private Piece? _piece;
+        private Piece? _capturedPiece;
         private Match? _match;
 
         public Move(Guid id, Guid matchId, Guid pieceId, Position previousPosition, Position newPosition, Guid? capturedPieceId, bool isPromotionMove, DateTime dateTime) : base(id)

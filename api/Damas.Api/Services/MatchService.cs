@@ -165,5 +165,72 @@ namespace Damas.Api.Services
                 new Piece(Guid.Empty, Guid.Empty, new Position(7, 7), Color.BLACK, false, false),
             };
         }
+
+        public async Task<IResult<BasicMatchModel>> UndoLastMove(Guid id)
+        {
+            var match = await _context.Matches.FindAsync(id);
+
+            if (match == null)
+            {
+                var message = new Message(MessageType.ERROR, $"Match {id} not found");
+                return new Result<BasicMatchModel>(message);
+            }
+
+            var move = await _context.Moves
+                .Include(move => move.Piece)
+                .Include(move => move.CapturedPiece)
+                .Where(move => move.MatchId == match.Id)
+                .OrderByDescending(move => move.DateTime)
+                .FirstOrDefaultAsync();
+
+            if (move == null)
+            {
+                var message = new Message(MessageType.ERROR, $"Match {id} has no moves");
+                return new Result<BasicMatchModel>(message);
+            }
+
+            var piece = move.Piece;
+
+            match.TurnColor = move.Piece.Color;
+            piece.Position = move.PreviousPosition;
+
+            if (move.CapturedPieceId.HasValue)
+            {
+                move.CapturedPiece.IsCaptured = false;
+            }
+
+            if (move.IsPromotionMove)
+            {
+                move.Piece.IsDama = false;
+            }
+
+            if (match.IsDraw)
+            {
+                match.IsDraw = false;
+            }
+
+            if (match.FinishedAt.HasValue)
+            {
+                match.FinishedAt = null;
+            }
+
+            if (match.WinnerId.HasValue)
+            {
+                match.WinnerId = null;
+            }
+
+            _context.Moves.Remove(move);
+
+            await _context.SaveChanges();
+
+            match.Pieces = await _context.Pieces
+                .Where(move => move.MatchId == match.Id)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var model = BasicMatchModel.FromEntity(match);
+
+            return new Result<BasicMatchModel>(model);
+        }
     }
 }

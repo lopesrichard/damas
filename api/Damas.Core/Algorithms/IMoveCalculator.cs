@@ -7,5 +7,6 @@ namespace Damas.Core.Algorithms
     public interface IMoveCalculator
     {
         IEnumerable<IGeneralTree<Position>> Calculate(Match match);
+        IGeneralTree<Position> Calculate(Match match, Piece piece);
     }
 }

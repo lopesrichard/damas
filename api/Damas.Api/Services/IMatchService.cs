@@ -9,5 +9,6 @@ namespace Damas.Api.Services
         Task<IResult<IEnumerable<BasicMoveModel>>> ListMoves(Guid id);
         Task<IResult<IEnumerable<NewMoveModel>>> ListPossibleMoves(Guid id);
         Task<IResult<BasicMatchModel>> NewMatch(NewMatchModel model);
+        Task<IResult<BasicMatchModel>> UndoLastMove(Guid id);
     }
 }

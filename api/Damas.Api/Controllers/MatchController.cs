@@ -40,7 +40,7 @@ namespace Damas.Api.Controllers
             return new OkObjectResult(result);
         }
 
-        [HttpGet("{id}/possible-moves")]
+        [HttpGet("{id}/moves/possibles")]
         public async Task<IActionResult> ListPossibleMoves(
             [FromRoute] Guid id,
             [FromServices] IMatchService service
@@ -63,6 +63,22 @@ namespace Damas.Api.Controllers
         )
         {
             var result = await service.NewMatch(model);
+
+            if (!result.IsSuccess)
+            {
+                return new BadRequestObjectResult(result);
+            }
+
+            return new OkObjectResult(result);
+        }
+
+        [HttpDelete("{id}/moves/last")]
+        public async Task<IActionResult> UndoLastMove(
+            [FromRoute] Guid id,
+            [FromServices] IMatchService service
+        )
+        {
+            var result = await service.UndoLastMove(id);
 
             if (!result.IsSuccess)
             {
