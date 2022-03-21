@@ -1,5 +1,3 @@
-using Damas.Core.Enums;
-
 namespace Damas.Core.Collections
 {
     public static class IEnumerableExtension
