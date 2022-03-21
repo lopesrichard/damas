@@ -1,9 +1,12 @@
 using Damas.Api.Models;
 using Damas.Api.Response;
 using Damas.Core.Enums;
+using Damas.Core.Serialization;
 using Damas.Core.Structs;
 using Damas.Data;
 using Damas.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Damas.Api.Services
 {
@@ -14,6 +17,23 @@ namespace Damas.Api.Services
         public MatchService(IApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IResult<BasicMatchModel>> GetMatch(Guid id)
+        {
+            var match = await _context.Matches
+                .Where(match => match.Id == id)
+                .Select(BasicMatchModel.Selector)
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
+
+            if (match == null)
+            {
+                var message = new Message(MessageType.ERROR, $"Match {id} not found");
+                return new Result<BasicMatchModel>(message);
+            }
+
+            return new Result<BasicMatchModel>(match);
         }
 
         public async Task<IResult<BasicMatchModel>> NewMatch(NewMatchModel model)

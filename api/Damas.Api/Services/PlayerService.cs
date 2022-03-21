@@ -1,5 +1,6 @@
 using Damas.Api.Models;
 using Damas.Api.Response;
+using Damas.Core.Enums;
 using Damas.Data;
 using Damas.Data.Entities;
 using Microsoft.EntityFrameworkCore;

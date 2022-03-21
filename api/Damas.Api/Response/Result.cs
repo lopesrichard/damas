@@ -1,4 +1,5 @@
 using Damas.Core.Collections;
+using Damas.Core.Enums;
 
 namespace Damas.Api.Response
 {
