@@ -45,5 +45,12 @@ namespace Damas.Core.Structs
         {
             return $"{X},{Y}";
         }
+
+        public static Position Parse(string source)
+        {
+            var position = source.Split(",").Select(position => int.Parse(position));
+
+            return new Position(position.ElementAt(0), position.ElementAt(1));
+        }
     }
 }
