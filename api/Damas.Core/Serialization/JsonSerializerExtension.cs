@@ -1,6 +1,5 @@
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Damas.Core.Serialization
 {
@@ -8,22 +7,17 @@ namespace Damas.Core.Serialization
     {
         public static string Serialize(this object payload)
         {
-            return JsonConvert.SerializeObject(payload, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return JsonConvert.SerializeObject(payload, new JsonSerializerSettings().Configure());
         }
 
         public static T? Deserialize<T>(this string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings().Configure());
         }
 
         public static object? Deserialize(this string json)
         {
-            return JsonConvert.DeserializeObject(json);
+            return JsonConvert.DeserializeObject(json, new JsonSerializerSettings().Configure());
         }
     }
 }

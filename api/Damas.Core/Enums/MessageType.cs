@@ -1,4 +1,4 @@
-namespace Damas.Api.Response
+namespace Damas.Core.Enums
 {
     public enum MessageType
     {

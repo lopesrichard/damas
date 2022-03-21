@@ -1,9 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Damas.Api.Services;
+using Damas.Core.Serialization;
 using Damas.Data;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Damas
 {
@@ -14,12 +13,7 @@ namespace Damas
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers().AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                options.SerializerSettings.Converters.Add(new StringEnumConverter());
-            });
+            builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Configure());
 
             builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
             {

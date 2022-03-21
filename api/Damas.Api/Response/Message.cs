@@ -1,3 +1,5 @@
+using Damas.Core.Enums;
+
 namespace Damas.Api.Response
 {
     public class Message

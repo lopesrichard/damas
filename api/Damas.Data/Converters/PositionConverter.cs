@@ -1,8 +1,7 @@
-using System.Linq.Expressions;
 using Damas.Core.Structs;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Damas.Data
+namespace Damas.Data.Converters
 {
     public class PositionConverter : ValueConverter<Position, string>
     {
