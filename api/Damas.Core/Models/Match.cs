@@ -70,37 +70,9 @@ namespace Damas.Core.Models
 
         public bool IsLastRow(Position position)
         {
-            var size = (double)Board.Size;
-            var row = TurnColor == Color.WHITE ? Math.Sqrt(size) : 0;
+            var size = (double) Board.Size;
+            var row = TurnColor == Color.WHITE ? Math.Sqrt(size) - 1 : 0;
             return position.Y == row;
-        }
-
-        public IEnumerable<Position> GetPositionsBetween(Position a, Position b)
-        {
-            var positions = new List<Position>();
-
-            while (a != b)
-            {
-                if (b.X > a.X && b.Y > a.Y)
-                {
-                    a = a.Northeast();
-                }
-                else if (b.X > a.X && b.Y < a.Y)
-                {
-                    a = a.Southeast();
-                }
-                else if (b.X < a.X && b.Y > a.Y)
-                {
-                    a = a.Northwest();
-                }
-                else if (b.X < a.X && b.Y < a.Y)
-                {
-                    a = a.Southwest();
-                }
-                positions.Add(a);
-            }
-
-            return positions;
         }
     }
 }
