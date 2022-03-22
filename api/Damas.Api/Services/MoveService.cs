@@ -30,7 +30,7 @@ namespace Damas.Api.Services
 
             if (piece == null)
             {
-                var message = new Message(MessageType.ERROR, $"Player {model.PieceId} not found");
+                var message = new Message(MessageType.ERROR, $"Piece {model.PieceId} not found");
                 return new Result<BasicMoveModel>(message);
             }
 
@@ -40,21 +40,8 @@ namespace Damas.Api.Services
                 return new Result<BasicMoveModel>(message);
             }
 
-            if (model.CapturedPieceId.HasValue)
-            {
-                var captured = await _context.Pieces.FindAsync(model.CapturedPieceId.Value);
-
-                if (captured == null)
-                {
-                    var message = new Message(MessageType.ERROR, $"Player {model.CapturedPieceId.Value} not found");
-                    return new Result<BasicMoveModel>(message);
-                }
-
-                captured.IsCaptured = true;
-            }
-
             var match = await _context.Matches
-                .Include(match => match.Pieces)
+                .Include(match => match.Pieces.Where(piece => !piece.IsCaptured))
                 .SingleOrDefaultAsync(match => match.Id == piece.MatchId);
 
             if (match == null)
@@ -78,7 +65,7 @@ namespace Damas.Api.Services
             var matchModel = Mapper.MatchToModel(match);
 
             var moves = _calculator.Calculate(Mapper.MatchToModel(match));
-            var selecteds = moves.Select(_selector.Select);
+            var selecteds = _selector.Select(moves);
 
             var selected = selecteds.SingleOrDefault(tree => tree.Root.Value == piece.Position);
 
@@ -103,6 +90,15 @@ namespace Damas.Api.Services
                 return new Result<BasicMoveModel>(message);
             }
 
+            var between = piece.Position.Between(model.NewPosition);
+            var opponentPieces = match.Pieces.Where(piece => piece.Color != match.TurnColor);
+            var capturedPiece = opponentPieces.SingleOrDefault(piece => between.Contains(piece.Position));
+
+            if (capturedPiece != null)
+            {
+                capturedPiece.IsCaptured = true;
+            }
+
             var isPromotionMove = matchModel.IsLastRow(model.NewPosition);
 
             if (isPromotionMove)
@@ -110,7 +106,9 @@ namespace Damas.Api.Services
                 piece.IsDama = true;
             }
 
-            var move = new Move(Guid.Empty, piece.MatchId, model.PieceId, piece.Position, model.NewPosition, model.CapturedPieceId, isPromotionMove, DateTime.UtcNow);
+            piece.Position = model.NewPosition;
+
+            var move = new Move(Guid.Empty, piece.MatchId, model.PieceId, piece.Position, model.NewPosition, capturedPiece?.Id, isPromotionMove, DateTime.UtcNow);
 
             _context.Moves.Add(move);
 
