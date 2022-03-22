@@ -106,9 +106,9 @@ namespace Damas.Api.Services
                 piece.IsDama = true;
             }
 
-            piece.Position = model.NewPosition;
-
             var move = new Move(Guid.Empty, piece.MatchId, model.PieceId, piece.Position, model.NewPosition, capturedPiece?.Id, isPromotionMove, DateTime.UtcNow);
+
+            piece.Position = model.NewPosition;
 
             _context.Moves.Add(move);
 
