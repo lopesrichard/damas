@@ -15,8 +15,6 @@ namespace Damas.Core.Algorithms
 
         public IGeneralTree<Position> Calculate(Match match, Piece piece)
         {
-            var pieces = match.GetPlayerPieces();
-
             return GetCalculator(piece).Calculate(match, piece);
         }
 
