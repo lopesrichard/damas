@@ -6,15 +6,11 @@ namespace Damas.Api.Models
     {
         public Guid PieceId { get; set; }
         public Position NewPosition { get; set; }
-        public Guid? CapturedPieceId { get; set; }
-        public bool IsPromotionMove { get; set; }
 
-        public NewMoveModel(Guid pieceId, Position newPosition, Guid? capturedPieceId, bool isPromotionMove)
+        public NewMoveModel(Guid pieceId, Position newPosition)
         {
             PieceId = pieceId;
             NewPosition = newPosition;
-            CapturedPieceId = capturedPieceId;
-            IsPromotionMove = isPromotionMove;
         }
     }
 }
