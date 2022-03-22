@@ -63,7 +63,7 @@ namespace Damas.Api.Services
         public async Task<IResult<IEnumerable<NewMoveModel>>> ListPossibleMoves(Guid id)
         {
             var match = await _context.Matches
-                .Include(match => match.Pieces)
+                .Include(match => match.Pieces.Where(piece => !piece.IsCaptured))
                 .SingleOrDefaultAsync(match => match.Id == id);
 
             if (match == null)
@@ -75,7 +75,7 @@ namespace Damas.Api.Services
             var model = Mapper.MatchToModel(match);
 
             var calculated = _calculator.Calculate(model);
-            var selected = calculated.Select(_selector.Select);
+            var selected = _selector.Select(calculated);
 
             var moves = selected.SelectMany(move =>
             {
@@ -88,11 +88,7 @@ namespace Damas.Api.Services
 
                 return move.Root.Children.Select(child =>
                 {
-                    var between = model.GetPositionsBetween(move.Root.Value, child.Value);
-
-                    var capturedPiece = match.Pieces.SingleOrDefault(piece => piece.Color != match.TurnColor && between.Contains(piece.Position));
-
-                    return new NewMoveModel(piece.Id, child.Value, capturedPiece?.Id, model.IsLastRow(child.Value));
+                    return new NewMoveModel(piece.Id, child.Value);
                 });
             });
 
