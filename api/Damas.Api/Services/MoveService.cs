@@ -99,7 +99,9 @@ namespace Damas.Api.Services
                 capturedPiece.IsCaptured = true;
             }
 
-            var isPromotionMove = matchModel.IsLastRow(model.NewPosition);
+            var isLastMove = child.Children.Count == 0;
+            var isLastRow = matchModel.IsLastRow(model.NewPosition);
+            var isPromotionMove = isLastMove && isLastRow;
 
             if (isPromotionMove)
             {
@@ -112,7 +114,7 @@ namespace Damas.Api.Services
 
             _context.Moves.Add(move);
 
-            if (child.Children.Count == 0)
+            if (isLastMove)
             {
                 match.TurnColor = match.TurnColor.Opposite();
             }
