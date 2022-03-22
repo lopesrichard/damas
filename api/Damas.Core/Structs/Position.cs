@@ -52,5 +52,35 @@ namespace Damas.Core.Structs
 
             return new Position(position.ElementAt(0), position.ElementAt(1));
         }
+
+        public int Distance(Position position)
+        {
+            return Distance(this, position);
+        }
+
+        public IEnumerable<Position> Between(Position position)
+        {
+            return Between(this, position);
+        }
+
+        public static int Distance(Position a, Position b)
+        {
+            return Math.Max(Math.Abs(a.X - b.X), Math.Abs(a.Y - b.Y));
+        }
+
+        public static IEnumerable<Position> Between(Position a, Position b)
+        {
+            var positions = new HashSet<Position>();
+
+            for (var i = 1; i < Distance(a, b); i++)
+            {
+                var X = a.X + (a.X > b.X ? -i : +i);
+                var Y = a.Y + (a.Y > b.Y ? -i : +i);
+
+                positions.Add(new Position(X, Y));
+            }
+
+            return positions;
+        }
     }
 }
