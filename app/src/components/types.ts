@@ -1,18 +1,37 @@
-export type SlotProps = {
+export type IMatch = {
+  id: string;
+  playerOne: IMatchPlayer;
+  playerTwo: IMatchPlayer;
+  turnColor: BlackOrWhite;
+  slots: ISlot[];
+};
+
+export type IMatchPlayer = {
+  id: string;
+  name: string;
+  color: BlackOrWhite;
+};
+
+export type ISlot = {
   id: string;
   position: [number, number];
   playable: boolean;
   hilighted: boolean;
-  piece: PieceProps | null;
+  piece: IPiece | null;
   onClick?: () => void;
 };
 
-export type BlackOrWhite = 'black' | 'white';
-
-export type PieceProps = {
+export type IPiece = {
   id: string;
   color: BlackOrWhite;
   isDama: boolean;
   selected: boolean;
-  hilighted: boolean;
 };
+
+export type BlackOrWhite = 'black' | 'white';
+
+export type IPossibleMoves = {
+  [pieceId: string]: Position[];
+};
+
+export type Position = [number, number];

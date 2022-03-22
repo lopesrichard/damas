@@ -3,9 +3,13 @@ import { observer } from 'mobx-react-lite';
 import { FunctionComponent, MouseEventHandler } from 'react';
 import { SLOT_SIZE } from './constants';
 import store from './store';
-import { PieceProps } from './types';
+import { IPiece } from './types';
+import { FaCrown } from 'react-icons/fa';
 
 const Circle = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   width: `calc(${SLOT_SIZE}px - 30%)`,
   height: `calc(${SLOT_SIZE}px - 30%)`,
   borderRadius: '100%',
@@ -24,45 +28,27 @@ const Circle = styled('div', {
         boxShadow: '0 0 5px 5px red',
       },
     },
+    hilighted: {
+      true: {
+        boxShadow: '0 0 5px 5px yellow',
+      },
+    },
   },
 });
 
-const calculateMovements = (pieceId: string): string[] => {
-  const slot = store.slots.find((slot) => slot.piece?.id === pieceId);
+export const Piece: FunctionComponent<IPiece> = observer((props) => {
+  const { id, color, selected, isDama } = props;
 
-  if (!slot?.piece) return [];
+  const positions = store.possibleMoves[id];
 
-  const slotLeftUp = store.getSlotByPosition(slot.position[0] - 1, slot.position[1] + 1);
-  const slotRightUp = store.getSlotByPosition(slot.position[0] + 1, slot.position[1] + 1);
-  const slotLeftBottom = store.getSlotByPosition(slot.position[0] - 1, slot.position[1] - 1);
-  const slotRightBottom = store.getSlotByPosition(slot.position[0] + 1, slot.position[1] - 1);
-
-  const movements = [];
-
-  if (slot.piece.color === 'white' && slotLeftUp && slotLeftUp.piece == null) {
-    movements.push(slotLeftUp.id);
-  }
-
-  if (slot.piece.color === 'white' && slotRightUp && slotRightUp.piece == null) {
-    movements.push(slotRightUp.id);
-  }
-
-  if (slot.piece.color === 'black' && slotLeftBottom && slotLeftBottom.piece == null) {
-    movements.push(slotLeftBottom.id);
-  }
-
-  if (slot.piece.color === 'black' && slotRightBottom && slotRightBottom.piece == null) {
-    movements.push(slotRightBottom.id);
-  }
-
-  return movements;
-};
-
-export const Piece: FunctionComponent<PieceProps> = observer((props) => {
   const handleClick: MouseEventHandler = (evt) => {
     evt.stopPropagation();
     store.selectPiece(props.id);
-    store.highlightSlots(calculateMovements(props.id));
+    store.highlightSlots(positions);
   };
-  return <Circle {...props} onClick={handleClick} />;
+  return (
+    <Circle color={color} selected={selected} hilighted={!!positions} onClick={positions ? handleClick : undefined}>
+      {isDama && <FaCrown color={color == 'black' ? 'white' : 'black'} />}
+    </Circle>
+  );
 });
