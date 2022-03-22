@@ -5,7 +5,22 @@ namespace Damas.Core.Algorithms
 {
     public class MoveSelector : IMoveSelector
     {
-        public IGeneralTree<Position> Select(IGeneralTree<Position> source)
+        public IEnumerable<IGeneralTree<Position>> Select(IEnumerable<IGeneralTree<Position>> source)
+        {
+            var moves = source
+                .Where(tree => tree.Root.Children.Count > 0)
+                .Select(tree => Select(tree));
+
+            var captures = moves.Where(tree =>
+            {
+                var child = tree.Root.Children.ElementAt(0);
+                return tree.Root.Value.Distance(child.Value) > 1;
+            });
+
+            return captures.Any() ? captures : moves;
+        }
+
+        private IGeneralTree<Position> Select(IGeneralTree<Position> source)
         {
             var tree = new GeneralTree<Position>(source.Root.Value);
 

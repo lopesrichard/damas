@@ -67,13 +67,11 @@ public class MoveSelectorTest
         Assert.That(moves.ElementAt(2).Root.Children, Has.Count.EqualTo(0));
 
         var selector = new MoveSelector();
-
-        var selected = moves.Select(selector.Select);
+        var selected = selector.Select(moves);
 
         // After selection
         Assert.That(selected.ElementAt(0).Root.Children, Has.Count.EqualTo(2));
         Assert.That(selected.ElementAt(1).Root.Children, Has.Count.EqualTo(1));
-        Assert.That(selected.ElementAt(2).Root.Children, Has.Count.EqualTo(0));
 
         // Check selected nodes
         Assert.AreEqual(new Position(1, 1), selected.ElementAt(0).Root.Value);
@@ -81,7 +79,6 @@ public class MoveSelectorTest
         Assert.AreEqual(new Position(2, 2), selected.ElementAt(0).Root.Children.ElementAt(1).Value);
         Assert.AreEqual(new Position(3, 1), selected.ElementAt(1).Root.Value);
         Assert.AreEqual(new Position(2, 2), selected.ElementAt(1).Root.Children.ElementAt(0).Value);
-        Assert.AreEqual(new Position(5, 1), selected.ElementAt(2).Root.Value);
     }
 
     // ==============================================================================================
@@ -159,7 +156,7 @@ public class MoveSelectorTest
         Assert.AreEqual(new Position(6, 4), moves.ElementAt(0).Root.Children.ElementAt(1).Children.ElementAt(0).Children.ElementAt(1).Value);
 
         var selector = new MoveSelector();
-        var selected = moves.Select(selector.Select);
+        var selected = selector.Select(moves);
 
         // After selection
         Assert.That(selected.ElementAt(0).Root.Children, Has.Count.EqualTo(2));

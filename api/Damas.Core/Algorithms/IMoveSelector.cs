@@ -5,6 +5,6 @@ namespace Damas.Core.Algorithms
 {
     public interface IMoveSelector
     {
-        IGeneralTree<Position> Select(IGeneralTree<Position> source);
+        IEnumerable<IGeneralTree<Position>> Select(IEnumerable<IGeneralTree<Position>> source);
     }
 }
