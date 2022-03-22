@@ -42,7 +42,7 @@ namespace Damas.Core.Models
 
         public Piece? GetPieceAt(Position position)
         {
-            return Pieces.SingleOrDefault(piece => piece.Position == position);
+            return Pieces.SingleOrDefault(p => p.Position == position && !p.IsCaptured);
         }
 
         public void AddPiece(Piece piece)
