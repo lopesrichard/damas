@@ -4,7 +4,6 @@
   import api, { BasicMatchModel, BasicPlayerModel, NewMoveModel, ListResult, Result } from 'api';
   import store, { Color, Position } from 'store';
   import { chain } from 'lodash';
-  import { css } from '@emotion/css';
 
   const continueToNewMatch = async (previous: ListResult<BasicPlayerModel>) => {
     if (!previous.isSuccess) {
@@ -66,7 +65,7 @@
           position: Position.from(piece.position),
           isDama: piece.isDama,
           selected: false,
-          hilighted: moves.some((move) => move.pieceId == piece.id),
+          highlighted: moves.some((move) => move.pieceId == piece.id),
         })),
         whoseTurn: match.whoseTurn.toLocaleLowerCase() as Color,
         possibleMoves: new Map<string, Position[]>(
@@ -88,25 +87,26 @@
       .then(continueToUpdateStore)
       .catch(console.error);
   };
-
-  const styles = {
-    container: css`
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    `,
-    title: css`
-      font-family: Hurricane, cursive;
-      font-size: 3rem;
-      margin: 0;
-    `,
-  };
 </script>
 
-<div class={styles.container}>
-  <h1 class={styles.title}>Damas Online</h1>
+<div>
+  <h1>Damas Online</h1>
   <Board size={8} />
   <Button text="Novo jogo" on:click={start} />
 </div>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  h1 {
+    font-family: Hurricane, cursive;
+    font-size: 3rem;
+    margin: 0;
+  }
+</style>

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { css, cx } from '@emotion/css';
   import api, { BasicMoveModel, ListResult, NewMoveModel, Result } from 'api';
   import colors from 'colors';
   import PieceComponent from 'components/Piece.svelte';
   import { chain } from 'lodash';
+  import { variables } from 'helpers';
   import store, { Match, Piece, Position } from 'store';
 
   export let position: Position;
@@ -69,7 +69,7 @@
     store.update((store) => {
       store.match.pieces = store.match.pieces.map((piece) => ({
         ...piece,
-        hilighted: moves.some((move) => move.pieceId == piece.id),
+        highlighted: moves.some((move) => move.pieceId == piece.id),
       }));
 
       store.match.possibleMoves = new Map<string, Position[]>(
@@ -100,30 +100,32 @@
       .catch(console.error);
   };
 
-  const styles = {
-    square: css`
-      background-color: ${position.playable() ? colors.gray.light : colors.white};
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 300ms;
-    `,
-    hilighted: css`
-      background-color: ${colors.pink.light};
-      cursor: pointer;
-    `,
-  };
+  const color = position.playable() ? colors.gray.light : colors.white;
 </script>
 
 {#if piece}
-  <div class={styles.square}>
+  <div use:variables={{ color }}>
     <PieceComponent {piece} />
   </div>
 {:else}
   <div
-    class={cx(styles.square, {
-      [styles.hilighted]: moves.some((move) => move.equals(position)),
-    })}
+    use:variables={{ color, highlight: colors.pink.light }}
+    class:highlighted={moves.some((move) => move.equals(position))}
     on:click={move}
   />
 {/if}
+
+<style>
+  div {
+    background-color: var(--color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 300ms;
+  }
+
+  div.highlighted {
+    background-color: var(--highlight);
+    cursor: pointer;
+  }
+</style>

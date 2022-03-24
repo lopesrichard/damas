@@ -45,7 +45,7 @@ export type Piece = {
   position: Position;
   isDama: boolean;
   selected: boolean;
-  hilighted: boolean;
+  highlighted: boolean;
 };
 
 export type Match = {

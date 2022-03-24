@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { css, cx } from '@emotion/css';
   import colors from 'colors';
   import type { Piece } from 'store';
-  import crown from 'assets/icons/crown-solid.svg';
   import store from 'store';
-  import Icon from './Icon.svelte';
+  import { variables } from 'helpers';
+  import FaCrown from 'svelte-icons/fa/FaCrown.svelte';
 
   export let piece: Piece;
 
   const select = () => {
-    if (!piece.hilighted) return;
+    if (!piece.highlighted) return;
     store.update((store) => {
       store.match.pieces.forEach((current) => {
         current.selected = current.id === piece.id;
@@ -17,35 +16,46 @@
       return store;
     });
   };
-
-  const styles = {
-    piece: css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
-      margin: auto;
-      transition: box-shadow 300ms;
-      background-color: ${colors[piece.color]};
-    `,
-    hilighted: css`
-      box-shadow: 0 0 3px 3px ${colors.orange};
-      cursor: pointer;
-    `,
-    selected: css`
-      box-shadow: 0 0 3px 3px ${colors.pink.dark} !important;
-      cursor: pointer;
-    `,
-  };
 </script>
 
 <div
-  class={cx(styles.piece, { [styles.selected]: piece.selected, [styles.hilighted]: piece.hilighted })}
+  use:variables={{ color: colors[piece.color], selection: colors.pink.dark, highlight: colors.orange }}
+  class:selected={piece.selected}
+  class:highlighted={piece.highlighted}
   on:click={select}
 >
   {#if piece.isDama}
-    <Icon name="crown" color={piece.color === 'black' ? 'white' : 'black'} />
+    <i use:variables={{ color: piece.color === 'black' ? 'white' : 'black' }}>
+      <FaCrown />
+    </i>
   {/if}
 </div>
+
+<style>
+  div,
+  i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  div {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    margin: auto;
+    transition: box-shadow 300ms;
+    background-color: var(--color);
+  }
+  div.highlighted {
+    box-shadow: 0 0 3px 3px var(--highlight);
+    cursor: pointer;
+  }
+  div.selected {
+    box-shadow: 0 0 3px 3px var(--selection) !important;
+    cursor: pointer;
+  }
+  i {
+    color: var(--color);
+    width: 20px;
+  }
+</style>
