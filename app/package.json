@@ -1,27 +1,28 @@
 {
-  "name": "my-vue-app",
+  "name": "damas",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@stitches/react": "^1.2.7",
-    "mobx": "^6.4.2",
-    "mobx-react": "^7.3.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
-    "uuid": "^8.3.2"
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
-    "@types/uuid": "^8.3.4",
-    "@vitejs/plugin-react": "^1.0.7",
+    "@rollup/plugin-alias": "^3.1.9",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@tsconfig/svelte": "^2.0.1",
+    "@types/lodash": "^4.14.180",
+    "sass": "^1.49.9",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.2.7",
+    "tslib": "^2.3.1",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.7.1",
+    "lodash": "^4.17.21"
   }
 }

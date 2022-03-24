@@ -1,7 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import alias from "@rollup/plugin-alias";
+import { resolve } from "path";
 
-// https://vitejs.dev/config/
+const base = resolve(__dirname, "src");
+
 export default defineConfig({
-  plugins: [react()]
-})
+  plugins: [
+    svelte(),
+    alias({
+      entries: [{ find: /(.*)/, replacement: resolve(base, "$1") }],
+    }),
+  ],
+});
